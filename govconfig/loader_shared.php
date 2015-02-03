@@ -9,9 +9,20 @@ function register_at_wpgov_menu_page(){
 function at_wpgov_settings () {
 
     echo '<div class="wrap">';
-    echo '<style>.box { max-height:110px; width: 70%;position: absolute;left: 300px; } .box h4 { margin-bottom: 0px; } .box li { float: left; width: 250px; padding: 0px 10px 5px 0px; }</style>';
-    echo '<div class="box">';
-    echo '<h4>Ultimi articoli:</h4>';
+    echo '<style>.box {width:90%;position:relative;height: 100px;margin: 50px auto; } </style>';
+    echo '<div class="box">
+
+    <div style="float:right;position:relative;">
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="F2JK36SCXKTE2">
+    <input type="image" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - Il metodo rapido, affidabile e innovativo per pagare e farsi pagare.">
+    <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+    </form>
+    </div>
+
+    <a style="float:left;padding: 5px 20px;" href="http://www.wpgov.it" target="_blank" title="WordPress per la Pubblica Amministrazione"><img src="' . plugin_dir_url(__FILE__) . 'panels/includes/wpa_black.png' . '" alt=""></a>';
+    echo '<h4>Novità:</h4>';
     include_once( ABSPATH . WPINC . '/feed.php' );
     $rss = fetch_feed( 'http://www.wpgov.it/feed' );
     if ( ! is_wp_error( $rss ) ) :
@@ -28,8 +39,7 @@ function at_wpgov_settings () {
             <li>
                 <a href="<?php echo esc_url( $item->get_permalink() ); ?>" target="_blank"
                     title="<?php printf( __( 'Posted %s', 'my-text-domain' ), $item->get_date('j F Y | g:i a') ); ?>">
-                    <?php echo substr(esc_html( $item->get_title() ), 0, 40);
-                    if (strlen(esc_html( $item->get_title() )) > 40) { echo '...'; } ?>
+                    <?php echo esc_html( $item->get_title() ); ?>
                 </a>
             </li>
         <?php endforeach; ?>
@@ -37,15 +47,6 @@ function at_wpgov_settings () {
 </ul>
     <?php
     echo '</div>';
-    echo '<div style="float:right;">
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-    <input type="hidden" name="cmd" value="_s-xclick">
-    <input type="hidden" name="hosted_button_id" value="F2JK36SCXKTE2">
-    <input type="image" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - Il metodo rapido, affidabile e innovativo per pagare e farsi pagare.">
-    <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
-    </form>
-    </div>';
-    echo '<a href="http://www.wpgov.it" target="_blank" title="WordPress per la Pubblica Amministrazione"><img src="' . plugin_dir_url(__FILE__) . 'panels/includes/wpa_black.png' . '" alt=""></a>';
 
     global $pagenow;
     $settings = get_option( "wpgov_theme_settings" );
@@ -88,15 +89,15 @@ function at_wpgov_settings () {
    echo '</table>';
 
     echo '<center>
-    Sviluppo e ideazione Wordpress a cura di <a href="http://marcomilesi.ml" target="_blank" title="www.marcomilesi.ml">Marco Milesi</a><br/><small>Per la preparazione di questo programma sono state impiegate diverse ore a titolo volontario. Se vuoi, puoi effettuare una piccola donazione utilizzando il link che trovi in alto a destra.<br/>Per qualsiasi informazione e per segnalare un problema è attivo il forum di supporto su <a href="http://wpgov.it/supporto" target="_blank" title="www.marcomilesi.ml/supporto">www.wpgov.it/supporto</a></small><br/><a href="http://www.comune.sanpellegrinoterme.bg.it" title="Made in San Pellegrino Terme">+ Proudly made in San Pellegrino Terme</a></center></div>';
+    Sviluppo e ideazione a cura di <a href="http://marcomilesi.ml" target="_blank" title="www.marcomilesi.ml">Marco Milesi</a><br/><small>Per la preparazione di questo programma sono state impiegate diverse ore a titolo volontario.<br>Se vuoi, puoi effettuare una piccola donazione utilizzando il link che trovi in alto a destra.</small><br/><a href="http://www.comune.sanpellegrinoterme.bg.it" title="Made in San Pellegrino Terme">+ Proudly made in San Pellegrino Terme</a></center></div>';
 }
 
 function at_wpgov_admin_tabs( $current = 'homepage' ) {
-    $tabs = array( 'general' => 'Info', 'at' => 'Amministrazione Trasparente', 'avcp' => 'Avcp XML', 'aa' => 'Amministrazione Aperta' );
+    $tabs = array( 'general' => '<span class="dashicons dashicons-admin-home"></span>', 'at' => 'Amministrazione Trasparente', 'avcp' => 'XML Bandi di Gara', 'aa' => 'Amministrazione Aperta' );
     echo '<h2 class="nav-tab-wrapper">';
     echo '<div style="float:right;">
         <a class="add-new-h2" href="http://wpgov.it/soluzioni/">Documentazione</a>
-        <a class="add-new-h2" href="http://wpgov.it/supporto/">Forum di Supporto</a>
+        <a class="add-new-h2" href="http://wpgov.it/supporto/">Supporto</a>
     </div>';
     foreach( $tabs as $tab => $name ){
         $class = ( $tab == $current ) ? ' nav-tab-active' : '';
