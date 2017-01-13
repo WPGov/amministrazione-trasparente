@@ -33,17 +33,18 @@
             update_option('at_ruoli_option_enable', '0');
         }
 
-        if (isset($_POST['at_option_showarchivedesc_n'])){
-            update_option('at_option_showarchivedesc', '0'); //Invertito
-        } else {
-            update_option('at_option_showarchivedesc', '1');
-        }
-
         if (isset($_POST['at_option_tag_n'])){
             update_option('at_option_tag', '0'); //Invertito
         } else {
             update_option('at_option_tag', '1');
         }
+        
+        if (isset($_POST['at_option_opacity_n'])){
+            update_option('at_option_opacity', '1');
+        } else {
+            update_option('at_option_opacity', '0');
+        }
+
 
         if (isset($_POST['at_option_sblocca_tipologie_n'])){
             update_option('at_option_sblocca_tipologie', '1');
@@ -51,15 +52,16 @@
             update_option('at_option_sblocca_tipologie', '0');
         }
     }
-    echo '<form method="post" name="options" target="_self">';
+    echo '<center><h3>Amministrazione Trasparente</h3></center>
+    <form method="post" name="options" target="_self">';
     settings_fields( 'at_option_group' );
 
     echo '<table class="form-table"><tbody>';
 
     echo '<tr><th scope="row">ID Pagina Amministrazione Trasparente</th>
-        <td><input type="text" name="at_option_id_n" value="';
+        <td><input type="number" min="0" name="at_option_id_n" value="';
     echo get_option('at_option_id');
-    echo '" />&nbsp;Inserisci qui l\'id della pagina in cui è stato inserito un tag head/list (serve per attivare correttamente il link "Torna al Sommario" e le impostazioni widget</td></tr>';
+    echo '" />&nbsp;Inserisci l\'id della pagina che intendi usare come indice di Amministrazione Trasparente (dove inserisci gli shortcode)</td></tr>';
 
     echo '<tr><th scope="row">Abilita Categorie<br/></th>
         <td><input type="checkbox" name="at_categorization_enable_n" ';
@@ -77,26 +79,17 @@
     }
     echo '/>&nbsp;Spunta questa casella per abilitare la possibilità di associare alcuni TAG agli articoli alle voci di Amministrazione Trasparente<br/>Dopo l\'abilitazione, aggiorna la pagina e comparirà un nuovo menù: <b>Trasparenza -> Tag</td></tr>';
 
-    //Opzione per visualizzare subito la descrizione nella vis. Archivio
-    echo '<tr><th scope="row">Abilita riferimento normativo espanbile</th>
-        <td><input type="checkbox" name="at_option_showarchivedesc_n" ';
-    $get_at_option_showarchivedesc = get_option('at_option_showarchivedesc');
-    if ($get_at_option_showarchivedesc == '0') { //Invertiamo
+echo '<tr><th scope="row">Opacizza sezioni vuote<br/></th>
+        <td><input type="checkbox" name="at_option_opacity_n" ';
+    $get_at_option_opacity = get_option('at_option_opacity');
+    if ($get_at_option_opacity == '1') {
         echo 'checked=\'checked\'';
     }
-    echo '/>&nbsp;Spunta questa casella per abilitare la possibilità di espandere e ridurre la sezione dei riferimenti normativi nella visualizzazione di archivio. (standard: Attivo)</td></tr>';
-
-    echo '<tr><th scope="row">Mostra "Un po\' di amore"</th>
-        <td><input type="checkbox" name="at_option_love_n" ';
-    $get_show_love = get_option('at_option_love');
-    if ($get_show_love == '1') {
-        echo 'checked=\'checked\'';
-    }
-    echo '/>&nbsp;Spunta questa casella per mostrare un link al plugin in fondo alla pagina [at-list] e [at-table]</td>';
+    echo '/>&nbsp;Attivando questa opzione le sezioni senza contenuto saranno renderizzate in modo diverso in modo che risaltino quelle con contenuti.</td></tr>';
 
     echo '</tbody></table>';
 
-    echo '<h1>Ruoli & Permessi</h1>
+    echo '<h3>RUOLI & PERMESSI</h3>
         <table class="form-table"><tbody>';
 
     echo '<tr><th scope="row">Mappa le meta capacità</th>
@@ -110,10 +103,10 @@
 
     echo '</tbody></table>';
 
-    echo '<h1>Impostazioni PASW 2013</h1>
+    echo '<h3>IMPOSTAZIONI PASW 2013</h3>
         <table class="form-table"><tbody>';
 
-        if (get_template() != 'pasw2013') { echo '<tr><b style="color:red;">Sembra che tu non stia usando Pasw2013 in quanto il tema è caricato nella cartella "' . get_template() . '". Le impostazioni seguenti saranno ignorate</b></tr>'; }
+        if (get_template() != 'pasw2013') { echo '<tr><span style="color:red;">Sembra che tu non stia usando Pasw2013 in quanto il tema è caricato nella cartella "' . get_template() . '".<br>Le impostazioni seguenti saranno ignorate</span></tr>'; }
 
         echo '<tr><th scope="row">Forza template PASW</th><td><input type="checkbox" name="at_pasw_developer_n" ';
     $get_pasw_developer = get_option('at_pasw_developer');

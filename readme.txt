@@ -2,19 +2,18 @@
 Contributors: Milmor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F2JK36SCXKTE2
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
-Requires at least: 3.8
-Tested up to: 4.1
-Version: 4.2
-Stable tag: 4.2
+Requires at least: 4.2
+Tested up to: 4.7
+Version: 5.3
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Soluzione completa per la gestione della sezione "Amministrazione Trasparente" delle Pubbliche Amministrazioni (D.lgs. 33/2013)
 
-
 == Description ==
 
-Il Plugin WordPress "Amministrazione Trasparente" è un software gratuito e completo per la gestione dell'omonima sezione ai sensi del D.lgs. n. 33 del 14/03/2013, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
+Software gratuito e completo per la gestione della sezione **Amministrazione Trasparente** ai sensi del D.lgs. n. 33 del 14/03/2013, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
 
 = Perchè scegliere "Amministrazione Trasparente" per Wordpress? =
 
@@ -46,7 +45,7 @@ L'intero modulo gestisce ogni voce come singolo articolo permettendo una comodit
 * **NUOVO** | Possibilità di associare anche le categorie alle voci create
 * E molte altre funzioni uniche che rendono questo software semplice e veloce da utilizzare!
 
-> **Centinaia** di PA hanno già scelto di affidarsi a questo plugin per l'adempimento normativo del d.lgs. 33/2013!
+> **Più di 1000** enti hanno già scelto di affidarsi a questo plugin per l'adempimento normativo del d.lgs. 33/2013!
 
 = CONTATTI & SUPPORTO =
 Per qualsiasi informazione, per segnalare problemi o per suggerire nuove funzioni, è attivo il forum di supporto su [supporto.marcomilesi.ml](http://supporto.marcomilesi.ml/)
@@ -62,42 +61,7 @@ http://www.youtube.com/watch?v=qWj9hvzNSlg
 
 http://www.youtube.com/watch?v=qWj9hvzNSlg
 
-> In caso di errori 404 (pagina non trovata), aggiornare i permalink da Impostazioni -> Permalink
-
-1. Carica il contenuto estratto nella cartella `/wp-content/plugins/`
-2. Attiva il plugin dal menu 'Plugins' in WordPress
-3. Inserire in una pagina o in un articolo i seguenti tag disponibili:
-
-* [at-desc] => Mostra la descrizione di Amministrazione Trasparente.
-* [at-search] => Mostra un box orizzontale per la ricerca in A.T., con filtro per tipologia
-* [at-head] => Mostra un sommario delle voci cliccabili. Da usare nella stessa pagina di [at-list] o [at-table]
-* [at-list] => Visualizza una lista di tutte le voci/sottovoci di A.T.
-* [at-table] => Visualizza una lista a 2 colonne di A.T.
-
-Una buona pagina potrebbe contenere i seguenti tag:
-
-* [at-desc]
-* [at-search]
-* [at-head]
-* [at-list] oppure [at-table] a seconda dei gusti o delle esigenze
-
-Ogni tag può essere inserito nel template utilizzando una funzione del tipo: `<?php echo do_shortcode('[at-list]') ?>`
-
-4. A questo punto basta inserire le voci selezionando, dal menù di amministrazione, Trasparenza > Nuova Voce
-5. Questo plugin funziona bene con la maggior parte dei temi Wordpress. Il plugin usa automaticamente template personalizzati se è attivo il tema PASW2013!
-
-= Integrare il plugin Breadcrumb NavXT con Amministrazione Trasparente =
-A partire dalla versione 3.2 di Amministrazione Trasparente, il plugin mostra automaticamente le briciole di pane per Pasw2013. Chi non usa il tema Pasw2013 può comunque installare il plugin Breadcrumb NavXT configurandolo manualmente o ricorrere a soluzioni differenti (il risultato gerarchico potrebbe differire).
-
-La gerarchia ideale per le briciole di pane in Amministrazione Trasparente potrebbe essere del tipo **Home > Amministrazione Trasparente** (pagina) ** > Sottosezione** (archivio) **> NomeVoce** (articolo singolo).
-Data la diversa natura delle varie parti delle briciole di pane, è necessario procedere ad un'accurata messa a punto del plugin Breadcrumb NavXT che supporta questo tipo di configurazioni.
-Per effettaure queste modifiche, accedere al back-end di Wordpress e cliccare su Impostazioni -> Breadcrumb NavXT -> Tipi di post.
-Tutte le opzioni da cambiare sono raccolte in [questa guida](http://supporto.marcomilesi.ml/2014/breadcrumb-navxt-e-le-briciole-di-pane/).
-
-= Modifica Template Archivio - [+] Info Normativa • Torna al sommario =
-Chi non utilizza il tema Pasw2013 può comunque abilitare la visualizzazione della descrizione espandibile e il link 'Torna al sommario' sotto il titolo degli archivi dei documenti modificando il file archive.php (il nome può cambiare) dalla cartella contenente i file del tema attivo.
-
-Per abilitarla, aprire il file aggiungendo `<?php if (function_exists('at_archive_buttons')) { at_archive_buttons(); } ?>` subito sotto al codice che genera il titolo.
+Puoi trovare la documentazione su [wpgov.it](https://wpgov.it/soluzioni/amministrazione-trasparente/)
 
 == Screenshots ==
 1. Menù Laterale
@@ -112,6 +76,69 @@ Per abilitarla, aprire il file aggiungendo `<?php if (function_exists('at_archiv
 
 == Changelog ==
 > Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+> **AGGIORNAMENTO D.lgs. 97/2016**
+> Fino a completamento del periodo di transizione comparirà un messaggio durante la gestione dei documenti di Amministrazione Trasparente, indicante gli aggiornamenti effettuati al sistema (aggiunta, rimozione e modifica di sezioni)
+> [wpgov.it/2017/d-lgs-972016-aggiornamento-del-software-gestione-wordpress](https://wpgov.it/2017/d-lgs-972016-aggiornamento-del-software-gestione-wordpress/)
+
+= Versione 5.3 13/01/2017 (!) =
+* **Riscritto** sistema di widget: comparirà un messaggio in amministrazione per richiederne la riconfigurazione nei siti in cui è attivo. Il nuovo widget sfrutta nuove API di WP e gestisce le sezioni in modo dinamico
+* **Corretta** mancata visualizzazione della nuova sezione "Dati sui pagamenti" nel widget
+* **Migliorate** prestazioni
+* **Corretti** alcuni php warning
+
+= Versione 5.2 11/01/2017 (!) =
+* **[DLGS 97/2016]** Aggiunta sezione "Dati sui pagamenti" in "Pagamenti dell'amministrazione"
+* **Aggiunti** alcuni riferimenti normativi di sezione. Si prega di verificare e proporre migliorie tramite i canali di supporto (per le sezioni mancanti o già attivate). Si veda il file **taxonomydescgenerator.php**
+* **Corretto** errore di mancata visualizzazione riferimenti normativi per "Attestazioni OIV o di struttura analoga"
+* **Corretto** richiamo a funzione deprecata in **shortcodes-search.php**
+* **Corretti** alcuni php warning
+
+= Versione 5.1.4 10/01/2017 =
+* **Testato** con WP 4.7
+
+= Versione 5.1.3 24/08/2016 =
+* WP Compatibility check
+
+= Versione 5.1.2 10/04/2016 =
+* 4.5 compatibility check and minor bugfix
+
+= Versione 5.1 23/11/2015 =
+* Nuovo pannello impostazioni WPGov
+* Nuova visualizzazione riferimenti normativi per le sezioni (HTML5)
+* Aggiunga opzione per opacizzare sezioni vuote
+* Aggiunto supporto a voci gerarchiche e ordinamento di visualizzazione
+* Miglioramenti minori
+* Incremento performance
+
+= Versione 5.0.8 11/09/2015 =
+* Miglioramenti performance minori
+* Corretto bug che mancato aggiornamento descrizione tipologie (per vecchie installazioni)
+* Modifiche minori
+* Modifiche readme
+
+= Versione 5.0.7 19/08/2015 =
+* ReadMe changes
+* 4.3 Compatibility Check
+
+= Versione 5.0.6 31/05/2015 =
+* **Correzione** refuso in una descrizione di sezione (grazie a Sara Lenzi - Comune di Prato)
+* **Correzione** ancora html con tag at-head e at-list / at-table (deprecati) (grazie a Sara Lenzi)
+
+= Versione 5.0.4 11/05/2015 =
+* Corretto problema di accessibilità (grazie Riccardo Boccaccio)
+
+= Versione 5.0.3 23/04/2015 =
+* Tested on WordPress 4.2
+
+= Versione 5.0.2 11/03/2015 =
+* Miglioramento stabilità e velocità
+
+= Versione 5.0 14/02/2015 =
+* Nuovi shortcode (vedasi documentazione)
+* Nuovi stili
+* Riscritta generazione e gestione sezioni
+* Miglioramento pannello WPGov
 
 = Versione 4.2 01/02/2015 =
 * Miglioramenti vari

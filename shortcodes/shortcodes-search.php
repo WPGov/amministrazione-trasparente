@@ -1,4 +1,4 @@
-<form role="search" method="get" id="searchform" action="<?php bloginfo('home'); ?>">
+<form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">
   <div>
     <input type="text" name="s" placeholder="Cerca..." />
 
@@ -6,7 +6,7 @@
 function get_terms_dropdown($taxonomies, $args){
     $myterms = get_terms($taxonomies, $args);
     $optionname = "tipologie";
-    $output ="<select style='width: 100px;' name='".$optionname."'><option selected='".$selected."' value=''>Tipologia</option>'";
+    $output ="<select style='width: 100px;' name='".$optionname."'><option value=''>Tipologia</option>'";
 
     foreach($myterms as $term){
         $term_taxonomy=$term->YOURTAXONOMY; //CHANGE ME

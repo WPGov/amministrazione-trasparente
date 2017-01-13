@@ -21,7 +21,8 @@ wp_update_term($term->term_id, 'tipologie', array('description'=>'
 Note
 Per onere informativo si intende qualunque obbligo informativo o adempimento che comporti la raccolta, l’elaborazione, la trasmissione, la conservazione e la produzione di informazioni e documenti alla P.A.
 '));
-$term = get_term_by('name','Attestazioni OIV o struttura analoga','tipologie');	
+
+$term = get_term_by('name','Attestazioni OIV o di struttura analoga','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
 Come previsto dalla delibera <b>CiVIT n. 71/2013</b> "Attestazioni OIV sull’assolvimento di specifici obblighi di pubblicazione per l’anno 2013 e attività di vigilanza e controllo della Commissione" sono disponibili in allegato:
  
@@ -71,16 +72,18 @@ wp_update_term($term->term_id, 'tipologie', array('description'=>'
 d) all\'elenco dei numeri di telefono nonché delle caselle di posta elettronica istituzionali e delle caselle di posta elettronica certificata dedicate, cui il cittadino possa rivolgersi per qualsiasi richiesta inerente i compiti istituzionali.
 '));
 
-//Consulenti e Collaboratori   ================== MANCA LA DESCRIZIONE DETTAGLIATA
+//Consulenti e Collaboratori
 $term = get_term_by('name','Consulenti e collaboratori','tipologie');	
-wp_update_term($term->term_id, 'tipologie', array('description'=>''));
+wp_update_term($term->term_id, 'tipologie', array('description'=>'<b>Art. 15, c. 1,2</b> - Obblighi di pubblicazione concernenti i titolari di incarichi dirigenziali e di collaborazione o consulenza'));
 
 //Personale
 $term = get_term_by('name','Incarichi amministrativi di vertice','tipologie');	
-wp_update_term($term->term_id, 'tipologie', array('description'=>''));
+wp_update_term($term->term_id, 'tipologie', array('description'=>'<b>Art. 15, c. 1,2</b> - Obblighi di pubblicazione concernenti i titolari di incarichi dirigenziali e di collaborazione o consulenza'));
+
+
 $term = get_term_by('name','Dirigenti','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
-<b>Articolo 15 , comma 1,2,5</b> - Obblighi di pubblicazione concernenti i titolari di incarichi dirigenziali e di collaborazione o consulenza<br/>
+<b>Articolo 15, comma 1,2,5</b> - Obblighi di pubblicazione concernenti i titolari di incarichi dirigenziali e di collaborazione o consulenza<br/>
 1 -  Fermi restando gli obblighi di comunicazione di cui all\'articolo 17, comma 22, della legge 15 maggio 1997, n. 127, le pubbliche amministrazioni pubblicano e aggiornano le seguenti informazioni relative ai titolari di incarichi amministrativi di vertice e di incarichi dirigenziali, a qualsiasi titolo conferiti, nonche\' di collaborazione o consulenza:<br/>
 a) gli estremi dell\'atto di conferimento dell\'incarico;<br/>
 b) il curriculum vitae;<br/>
@@ -132,32 +135,39 @@ wp_update_term($term->term_id, 'tipologie', array('description'=>'
 c) i nominativi ed i curricula dei componenti degli organismi indipendenti di valutazione di cui all\'articolo 14 del decreto legislativo n. 150 del 2009;
 '));
 
-//Bandi di Concorso   ================== MANCA LA DESCRIZIONE DETTAGLIATA
+//Bandi di Concorso
 $term = get_term_by('name','Bandi di Concorso','tipologie');	
-wp_update_term($term->term_id, 'tipologie', array('description'=>''));
+wp_update_term($term->term_id, 'tipologie', array('description'=>'
+<b>Articolo 19</b> - Bandi di concorso <br/>
+1. Fermi restando gli altri obblighi di pubblicità legale, le pubbliche amministrazioni pubblicano i bandi di concorso per il reclutamento, a qualsiasi titolo, di personale presso l\'amministrazione.<br />
+2. Le pubbliche amministrazioni pubblicano e tengono costantemente aggiornato l\'elenco dei bandi in corso, nonché quello dei bandi espletati nel corso dell\'ultimo triennio, accompagnato dall\'indicazione, per ciascuno di essi, del numero dei dipendenti assunti e delle spese effettuate.'));
 
 //Performance
 $term = get_term_by('name','Piano della Performance','tipologie');	
-wp_update_term($term->term_id, 'tipologie', array('description'=>''));
+wp_update_term($term->term_id, 'tipologie', array('description'=>'
+<b>Articolo 8 lett. b</b> - Programma triennale per la trasparenza e l\'integrità<br />
+8. Ogni amministrazione ha l\'obbligo di pubblicare sul proprio sito istituzionale nella sezione Amministrazione trasparente di cui all\'articolo 9:<br />
+b) il Piano e la Relazione di cui all\'articolo 10 del decreto legislativo 27 ottobre 2009, n. 150'));
+
 $term = get_term_by('name','Relazione sulla Performance','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
-<b>Dlgs 33/2013 - Articolo 10, comma 8, lettera b</b> - Programma triennale per la trasparenza e l\'integrità<br/>
+<b>Articolo 10, comma 8, lettera b</b> - Programma triennale per la trasparenza e l\'integrità<br/>
 8. Ogni amministrazione ha l\'obbligo di pubblicare sul proprio sito istituzionale nella sezione: "Amministrazione trasparente" di cui all\'articolo 9:<br/>
 b) il Piano e la Relazione di cui all\'articolo 10 del decreto legislativo 27 ottobre 2009, n. 150
 '));
 $term = get_term_by('name','Ammontare complessivo dei premi','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
-<b>Dlgs 33/2013 - Articolo 20, comma 1</b> - Obblighi di pubblicazione dei dati relativi alla valutazione della performance e alla distribuzione dei premi al personale<br/>
+<b>Articolo 20, comma 1</b> - Obblighi di pubblicazione dei dati relativi alla valutazione della performance e alla distribuzione dei premi al personale<br/>
 1. Le pubbliche amministrazioni pubblicano i dati relativi all\'ammontare complessivo dei premi collegati alla performance stanziati e l\'ammontare dei premi effettivamente distribuiti.
 '));
 $term = get_term_by('name','Dati relativi ai premi','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
-<b>Dlgs 33/2013 - Articolo 20, comma 2</b> - Obblighi di pubblicazione dei dati relativi alla valutazione della performance e alla distribuzione dei premi al personale<br/>
+<b>Articolo 20, comma 2</b> - Obblighi di pubblicazione dei dati relativi alla valutazione della performance e alla distribuzione dei premi al personale<br/>
 2. Le pubbliche amministrazioni pubblicano i dati relativi all\'entità del premio mediamente conseguibile dal personale dirigenziale e non dirigenziale, i dati relativi alla distribuzione del trattamento accessorio, in forma aggregata, al fine di dare conto del livello di selettività utilizzato nella distribuzione dei premi e degli incentivi, nonché i dati relativi al grado di differenziazione nell\'utilizzo della premialità sia per i dirigenti sia per i dipendenti.
 '));
 $term = get_term_by('name','Benessere organizzativo','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
-<b>Dlgs 33/2013 - Articolo 20, comma 3</b> - Obblighi di pubblicazione dei dati relativi alla valutazione della performance e alla distribuzione dei premi al personale<br/>
+<b>Articolo 20, comma 3</b> - Obblighi di pubblicazione dei dati relativi alla valutazione della performance e alla distribuzione dei premi al personale<br/>
 3. Le pubbliche amministrazioni pubblicano, altresì, i dati relativi ai livelli di benessere organizzativo.
 '));
 
@@ -239,7 +249,7 @@ d) accordi stipulati dall\'amministrazione con soggetti privati o con altre ammi
 $term = get_term_by('name','Controlli sulle imprese','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
 <b>Dlgs 33/2013 - Articolo 25</b> - Obblighi di pubblicazione concernenti i controlli sulle imprese<br/>
-1. Le pubbliche amministrazioni, in modo dettagliato e facilmente comprensibile, pubblicano sul proprio sito istituzionale e sul sito: <a href="www.impresainungiorno.gov.it" title="Impresa in un giorno .gov">www.impresainungiorno.gov.it</a>:<br/>
+1. Le pubbliche amministrazioni, in modo dettagliato e facilmente comprensibile, pubblicano sul proprio sito istituzionale e sul sito: <a href="http://www.impresainungiorno.gov.it" title="Impresa in un giorno .gov">www.impresainungiorno.gov.it</a>:<br/>
 a) l\'elenco delle tipologie di controllo a cui sono assoggettate le imprese in ragione della dimensione e del settore di attività, indicando per ciascuna di esse i criteri e le relative modalità di svolgimento;<br/>
 b) l\'elenco degli obblighi e degli adempimenti oggetto delle attività di controllo che le imprese sono tenute a rispettare per ottemperare alle disposizioni normative.'));
 
@@ -317,6 +327,8 @@ wp_update_term($term->term_id, 'tipologie', array('description'=>'
 6. Gli enti, le aziende e le strutture pubbliche e private che erogano prestazioni per conto del servizio sanitario sono tenuti ad indicare nel proprio sito, in una apposita sezione denominata «Liste di attesa», il tempi di attesa previsti e i tempi medi effettivi di attesa per ciascuna tipologia di prestazione erogata.'));
 
 //Pagamenti dell' amministrazione
+$term = get_term_by('name','Dati sui pagamenti','tipologie');	
+wp_update_term($term->term_id, 'tipologie', array('description'=>'Art.4-bis c.2 d.lgs 33/2013'));
 $term = get_term_by('name','Indicatore di tempestività dei pagamenti','tipologie');	
 wp_update_term($term->term_id, 'tipologie', array('description'=>'
 <b>Dlgs 33/2013 - Articolo 33</b> - Obblighi di pubblicazione concernenti i tempi di pagamento dell\'amministrazione<br/>
@@ -375,11 +387,11 @@ c) il costo previsto degli interventi e il costo effettivo sostenuto dall\'ammin
 
 //Corruzione
 $term = get_term_by('name','Corruzione','tipologie');	
-wp_update_term($term->term_id, 'tipologie', array('description'=>''));
+wp_update_term($term->term_id, 'tipologie', array('description'=>'Riferimenti e documenti ai fini della prevenzione della corruzione'));
 
 //Accesso civico
 $term = get_term_by('name','Accesso civico','tipologie');	
-wp_update_term($term->term_id, 'tipologie', array('description'=>''));
+wp_update_term($term->term_id, 'tipologie', array('description'=>'L\'accesso civico è disciplinato dall\'art. 5 del D.Lgs 33/2013. Esso comporta il diritto di chiunque di richiedere i dati, le informazioni e il documento che le pubbliche amministrazioni hanno l\'obbligo di pubblicare, nei casi in cui sia stata omessa la loro pubblicazione.'));
 
 //Accessibilità e Catalogo di dati, metadati e banche dati
 $term = get_term_by('name','Accessibilità e Catalogo di dati, metadati e banche dati','tipologie');	

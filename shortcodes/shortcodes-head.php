@@ -7,7 +7,7 @@
 <li><a href="#bandidiconcorso">Bandi di concorso</a></li>
 <li><a href="#performance">Performance</a></li>
 <li><a href="#enticontrollati">Enti controllati</a></li>
-<li><a href="#attivitaeprocedimenti">Attività e procedimenti</a></li>
+<li><a href="#attiviteprocedimenti">Attività e procedimenti</a></li>
 <li><a href="#provvedimenti">Provvedimenti</a></li>
 <li><a href="#controllisulleimprese">Controlli sulle imprese</a></li>
 <li><a href="#bandidigaraecontratti">Bandi di gara e contratti</a></li>

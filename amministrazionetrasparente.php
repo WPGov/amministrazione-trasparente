@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Amministrazione Trasparente
-Plugin URI: http://wpgov.it/soluzioni/amministrazione-trasparente/
+Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
 Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
-Version: 4.2
+Version: 5.3
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: http://marcomilesi.ml
@@ -145,7 +145,7 @@ function register_cpt_documento_trasparenza() {
         'hierarchical' => true,
         'description' => 'trasparenza',
         'taxonomies' => $taxonomysupport,
-        'supports' => array( 'title', 'editor', 'excerpt', 'revisions' ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'revisions', 'fe-attributes' ),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -169,53 +169,55 @@ function register_cpt_documento_trasparenza() {
 
 /* =========== SHORTCODES [at-head] & [at-desc] & [at-table] & [at-list] ============ */
 
-function at_head_shtc($atts)
-{
-ob_start();
-include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-head.php');
-$atshortcode = ob_get_clean();
-return $atshortcode;
-}
-add_shortcode('at-head', 'at_head_shtc');
-
-function at_desc_shtc($atts)
-{
-$atshortcode = '<p>In questa pagina sono raccolte le informazioni che le Amministrazioni pubbliche sono tenute a pubblicare nel proprio sito internet nell\'ottica della trasparenza, buona amministrazione e di prevenzione dei fenomeni della corruzione (L.69/2009, L.213/2012, <a href="http://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2013-03-14;33" title="Riferimenti normativi">Dlgs33/2013</a>, L.190/2012).</p>';
-return $atshortcode;
-}
-add_shortcode('at-desc', 'at_desc_shtc');
-
-function at_table_shtc($atts)
-{
-ob_start();
-include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-table.php');
-    $atshortcode += '<style>.at-tableclass {width:49%;float:left;padding:0px 0px 0px 5px;position:relative;min-width: 200px;} .at-tableclass h3 a {text-decoration:none;}</style>';
+function at_head_shtc($atts) {
+    ob_start();
+    include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-head.php');
     $atshortcode = ob_get_clean();
-return $atshortcode;
+    return $atshortcode;
+} add_shortcode('at-head', 'at_head_shtc');
 
+function at_desc_shtc($atts) {
+    ob_start();
+    echo '<p>In questa pagina sono raccolte le informazioni che le Amministrazioni pubbliche sono tenute a pubblicare nel proprio sito internet nell\'ottica della trasparenza, buona amministrazione e di prevenzione dei fenomeni della corruzione (L.69/2009, L.213/2012, Dlgs33/2013, L.190/2012).</p>';
+    $atshortcode = ob_get_clean();
+    return $atshortcode;
+} add_shortcode('at-desc', 'at_desc_shtc');
+
+function at_table_shtc($atts) {
+    ob_start();
+        echo do_shortcode( '[at-sezioni col="2"]' );
+        $atshortcode = ob_get_clean();
+    return $atshortcode;
 }
 add_shortcode('at-table', 'at_table_shtc');
 
-function at_list_shtc($atts)
-{
-ob_start();
-include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-list.php');
-$atshortcode = ob_get_clean();
-return $atshortcode;
+function at_list_shtc($atts) {
+    ob_start();
+    echo do_shortcode( '[at-sezioni col="1"]' );
+    $atshortcode = ob_get_clean();
+    return $atshortcode;
 }
 add_shortcode('at-list', 'at_list_shtc');
 
-function at_search_shtc($atts)
-{
-ob_start();
-include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-search.php');
-$atshortcode = ob_get_clean();
-return $atshortcode;
-}
-add_shortcode('at-search', 'at_search_shtc');
+function at_sezioni_shtc($atts) {
+    ob_start();
+    include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-sezioni.php');
+    $atshortcode = ob_get_clean();
+    return $atshortcode;
+} add_shortcode('at-sezioni', 'at_sezioni_shtc');
+
+function at_search_shtc($atts)  {
+    ob_start();
+    include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-search.php');
+    $atshortcode = ob_get_clean();
+    return $atshortcode;
+} add_shortcode('at-search', 'at_search_shtc');
 
 function at_archive_buttons() { //Questa funzione va chiamata con at_archive_buttons()
 include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-php-archive.php');
+}
+function at_archive_buttons_pasw2015() {
+at_archive_buttons();
 }
 
 /* =========== VISUALIZZAZIONE ARCHIVIO SPECIALE ============ */
@@ -243,23 +245,23 @@ add_filter( 'template_include', 'at_force_template' );
 
 /* Utilità */
 
-function check_new_version($return) {
+function at_check_new_version($return) {
     if (!$return) { $return = false; }
 
     $arrayatpv = get_plugin_data ( __FILE__ );
     $nuova_versione = $arrayatpv['Version'];
 
-    if (version_compare(get_option('at_version_number'), $nuova_versione, '<') == '1') {
-        update_option( 'at_version_number', $nuova_versione );
+    if ( version_compare( get_option('at_version_number'), $nuova_versione, '<')) {
         require(plugin_dir_path(__FILE__) . 'taxonomygenerator.php');
-        echo '<div class="updated"><p>Grazie per aver aggiornato Amministrazione Trasparente alla versione <b>' . get_option('at_version_number') . '</b><br/><a href="https://wordpress.org/plugins/amministrazione-trasparente/changelog/" target="_blank">Changelog</a> &bull; <a href="http://www.wpgov.it" target="_blank">WPGov.it</a> </p></div>';
+        update_option( 'at_version_number', $nuova_versione );
     }
     if ($return) { return $nuova_versione; }
 }
-add_action('admin_init', 'check_new_version');
+add_action('admin_init', 'at_check_new_version');
 
 /* =========== FUNZIONI INCLUSE ============ */
 
+require_once(plugin_dir_path(__FILE__) . 'inc/arraysezioni.php');
 require_once(plugin_dir_path(__FILE__) . 'widget/widget.php');
 require_once(plugin_dir_path(__FILE__) . 'redirector.php');
 require_once(plugin_dir_path(__FILE__) . 'admin-messages.php');
@@ -270,5 +272,5 @@ function AT_ADMIN_LOAD () {
     require_once(plugin_dir_path(__FILE__) . 'searchTaxonomy/searchTaxonomyGT.php');
     require_once(plugin_dir_path(__FILE__) . 'taxfilteringbackend.php');
 }
-require_once(plugin_dir_path(__FILE__) . 'govconfig/loader_shared.php');
+require_once(plugin_dir_path(__FILE__) . 'wpgov/load.php');
 ?>

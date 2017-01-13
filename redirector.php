@@ -24,7 +24,7 @@ function at_save_aturl_meta($post_id, $post) {
 
 	// verify this came from the our screen and with proper authorization,
 	// because save_post can be triggered at other times
-	if ( !wp_verify_nonce( $_POST['aturlmeta_noncename'], plugin_basename(__FILE__) )) {
+	if ( isset($_POST['aturlmeta_noncename']) && !wp_verify_nonce( $_POST['aturlmeta_noncename'], plugin_basename(__FILE__) )) {
 	return $post->ID;
 	}
 	
@@ -34,20 +34,19 @@ function at_save_aturl_meta($post_id, $post) {
 
 	// OK, we're authenticated: we need to find and save the data
 	// We'll put it into an array to make it easier to loop though.
-	
-	$aturls_meta['_aturl'] = $_POST['_aturl'];
-	
-	// Add values of $aturls_meta as custom fields
-	
-	foreach ($aturls_meta as $key => $value) { // Cycle through the $aturls_meta array!
-		if( $post->post_type == 'revision' ) return; // Don't store custom data twice
-		$value = implode(',', (array)$value); // If $value is an array, make it a CSV (unlikely)
-		if(get_post_meta($post->ID, $key, FALSE)) { // If the custom field already has a value
-			update_post_meta($post->ID, $key, $value);
-		} else { // If the custom field doesn't have a value
-			add_post_meta($post->ID, $key, $value);
+	if ( isset( $_POST['_aturl']) ) {
+		$aturls_meta['_aturl'] = $_POST['_aturl'];
+
+		foreach ($aturls_meta as $key => $value) { // Cycle through the $aturls_meta array!
+			if( $post->post_type == 'revision' ) return; // Don't store custom data twice
+			$value = implode(',', (array)$value); // If $value is an array, make it a CSV (unlikely)
+			if(get_post_meta($post->ID, $key, FALSE)) { // If the custom field already has a value
+				update_post_meta($post->ID, $key, $value);
+			} else { // If the custom field doesn't have a value
+				add_post_meta($post->ID, $key, $value);
+			}
+			if(!$value) delete_post_meta($post->ID, $key); // Delete if blank
 		}
-		if(!$value) delete_post_meta($post->ID, $key); // Delete if blank
 	}
 
 }
