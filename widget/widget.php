@@ -2,7 +2,7 @@
 
 class atWidget extends WP_Widget {
 
-    function atWidget() {
+    function __construct() {
 
         parent::__construct( 'atwidget', 'Amministrazione Trasparente', array( 'description' => 'Lista delle sezioni relative alla trasparenza' ) );
 
