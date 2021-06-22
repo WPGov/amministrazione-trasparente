@@ -6,7 +6,7 @@
 function get_terms_dropdown($taxonomies, $args){
     $myterms = get_terms($taxonomies, $args);
     $optionname = "tipologie";
-    $output ="<select style='width: 100px;' name='".$optionname."'><option value=''>Tipologia</option>'";
+    $output ="<select style='width: 100px;' name='".$optionname."'><option value=''>Filtra</option>'";
 
     foreach($myterms as $term){
         $term_taxonomy=$term->YOURTAXONOMY; //CHANGE ME

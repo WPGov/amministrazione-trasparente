@@ -14,18 +14,17 @@ function at_redirect_url() {
     // Get the aturl data if its already been entered
     $aturl = get_post_meta($post->ID, '_aturl', true);
     // Echo out the field
-	echo '<p>Se vuoi che questo articolo reindirizzi automaticamente su un\'altra pagina, inserisci qui di seguito l\'url completo con http://';
-    echo '<input type="text" name="_aturl" value="' . $aturl  . '" class="widefat" />';
+	echo '<p>Reindirizza questo articolo a un altro URL.</p>';
+    echo '<input type="text" name="_aturl" value="' . $aturl  . '" class="widefat" placeholder="https://" />';
 }
 
 // Save the Metabox Data
 
 function at_save_aturl_meta($post_id, $post) {
 
-	// verify this came from the our screen and with proper authorization,
-	// because save_post can be triggered at other times
-	if ( isset($_POST['aturlmeta_noncename']) && !wp_verify_nonce( $_POST['aturlmeta_noncename'], plugin_basename(__FILE__) )) {
-	return $post->ID;
+	// verify this came from the our screen and with proper authorization, because save_post can be triggered at other times
+	if ( !isset( $_POST['aturlmeta_noncename'] ) || !wp_verify_nonce( $_POST['aturlmeta_noncename'], plugin_basename(__FILE__) )) {
+		return $post->ID;
 	}
 	
 	// Is the user allowed to edit the post or page?
@@ -35,7 +34,7 @@ function at_save_aturl_meta($post_id, $post) {
 	// OK, we're authenticated: we need to find and save the data
 	// We'll put it into an array to make it easier to loop though.
 	if ( isset( $_POST['_aturl']) ) {
-		$aturls_meta['_aturl'] = $_POST['_aturl'];
+		$aturls_meta['_aturl'] = esc_url_raw( $_POST['_aturl'] );
 
 		foreach ($aturls_meta as $key => $value) { // Cycle through the $aturls_meta array!
 			if( $post->post_type == 'revision' ) return; // Don't store custom data twice
@@ -60,21 +59,21 @@ if ( !defined('REDIRECT_BY_CUSTOM_FIELD_HTTP_STATUS') )
 
 // This section will redirect URL's when the real permalink is hit directly.
 // Note: I didn't use rewrite because I didn't want to have to keep track of all redirect mappings.
-add_action('template_redirect', 'redirect_header', 1);
-function redirect_header() {
+add_action('template_redirect', function() {
 	global $wp_query;
 	if ( is_singular('amm-trasparente') &&
 		 ($id = get_queried_object_id()) &&
-		 ($link = get_redirect_url($id)) ) {
+		 ($link = at_get_redirect_url($id)) ) {
 		wp_redirect($link, REDIRECT_BY_CUSTOM_FIELD_HTTP_STATUS);
 		exit;
 	}
-}
+}, 1);
+
 
 // This section will replace every instance of the permalink with the redirect URL.
-add_filter('page_link', 'redirect_by_custom_field', 10, 2);
-add_filter('post_link', 'redirect_by_custom_field', 10, 2);
-function redirect_by_custom_field($link, $postarg = null) {
+add_filter('page_link', 'at_redirect_by_custom_field', 10, 2);
+add_filter('post_link', 'at_redirect_by_custom_field', 10, 2);
+function at_redirect_by_custom_field($link, $postarg = null) {
 	global $post;
 	if ( is_admin() )
 		return $link;
@@ -87,14 +86,14 @@ function redirect_by_custom_field($link, $postarg = null) {
 	else
 		return $link;
 	
-	if ( $redirect = get_redirect_url($id) )
+	if ( $redirect = at_get_redirect_url($id) )
 		return $redirect;
 	
 	return $link;
 }
 
 // id must be int
-function get_redirect_url($id) {
+function at_get_redirect_url($id) {
 	static $placeholders;
 
 	if ( $redirect = get_post_meta( absint($id), '_aturl', true ) ) {

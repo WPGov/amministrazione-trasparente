@@ -3,52 +3,48 @@ Contributors: Milmor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F2JK36SCXKTE2
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
-Tested up to: 4.7
-Version: 5.3
-Stable tag: trunk
+Tested up to: 5.7
+Version: 7.1.3
+Stable tag: 7.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Soluzione completa per la gestione della sezione "Amministrazione Trasparente" delle Pubbliche Amministrazioni (D.lgs. 33/2013)
+Soluzione completa per la gestione della sezione "Amministrazione Trasparente" nelle Pubbliche Amministrazioni (D.lgs. 33/2013)
 
 == Description ==
 
-Software gratuito e completo per la gestione della sezione **Amministrazione Trasparente** ai sensi del D.lgs. n. 33 del 14/03/2013, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
+Software completo per la gestione della sezione **Amministrazione Trasparente** ai sensi del D.lgs. n. 33 del 14/03/2013 e successive integrazioni, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
 
-= Perchè scegliere "Amministrazione Trasparente" per Wordpress? =
+= Vantaggi =
 
-Amministrazione Trasparente è stato sviluppato per essere flessibile, semplice e intuitivo.
+Flessibile, semplice e intuitivo.
 
-L'intero modulo gestisce ogni voce come singolo articolo permettendo una comodità di aggiornamento notevole! Per ogni voce è possibile inserire file, immagini, testi, link o effettuare un reindirizzamento a un'altra pagina. E' la **soluzione ideale** per tutte le P.A.
+> Con questo plugin potrai gestire le sezioni richieste dalla normativa direttamente nel tuo sito WordPress, senza il bisogno di servizi esterni
 
-> [INSTALLAZIONE e CONFIGURAZIONE](http://wordpress.org/plugins/amministrazione-trasparente/installation/) | [GUIDA PDF PER UFFICI](https://www.dropbox.com/s/sk6lww0marza4jn/guida_amministrazionetrasparente.pdf?dl=0)
+Il modulo gestisce ogni voce come singolo post velocizzando la pubblicazione e consentendo di inserire file, immagini, testi, link o effettuare un reindirizzamento a un'altro indirizzo.
+
+> [INSTALLAZIONE e CONFIGURAZIONE](http://wordpress.org/plugins/amministrazione-trasparente/installation/) | [MANUALE PDF](https://www.dropbox.com/s/sk6lww0marza4jn/guida_amministrazionetrasparente.pdf?dl=0)
 
 > Comuni | [Comune di San Pellegrino Terme](http://www.comune.sanpellegrinoterme.bg.it/comune/trasparenza/) - [Comune di Bordighera](http://trasparenza.bordighera.it/)
 
-> Scuole | [IC Nord 1 Brescia](http://www.icnord1brescia.gov.it/amministrazione-trasparente/) - [IIS "Leonardo da Vinci" (OG)](http://liceolanusei.it/amministrazione-trasparente/)
+> Scuole | [IIS "Leonardo da Vinci" (OG)](https://www.liceolanusei.edu.it/amministrazione-trasparente/)
 
-> Società | [CBLSPA Servizio Idrico Integrato](http://www.cblspa.it/)
-
-= Caratteristiche del Plugin =
-* Aggiornamenti periodici (**aggiornate sempre per garantirvi continui miglioramenti e nuove funzioni!**)
+= Caratteristiche Principali =
+* Aggiornamenti periodici
 * Inserimento flessibile, intuitivo e veloce
-* Supporto per la catalogazione front-end avanzata delle voci (tipologie AT, tag e **categorie**) e filtraggio back-end
-* Soluzione ideale per ogni tipo di informazione (documenti, testo, link,...)
-* Gestione completa di tutte le 56 categorie richieste dalla legge
-* Ogni documento è gestito singolarmente (come gli articoli, dai quali eredita ruoli/permessi)
-* Possibilità di modifica di ruoli e permessi grazie al plugin integrato Map Cap
+* Supporto per la catalogazione avanzata delle voci (sezioni AT, categorie, tag) e filtraggio dati back-end
+* Soluzione ideale per ogni tipo di contenuto (documenti, testo, link,...)
+* Gestione avanzata dei ruoli ("map-cap ready")
 * Funzione di reindirizzamento delle voci a link esterni
-* Codice leggero, commentato e facilmente modificabile
-* Doppia visualizzazione a scelta grazie a 2 shortcode: modalità lista e modalità tabella (2 colonne)
-* Widget personalizzabile con 2 modalità di visualizzazione
-* **Compatibilità completa per Pasw2013** (visualizzazione archivio/singola modificate appositamente per il tema della comunità di pratica Porte Aperte sul Web)
-* **NUOVO** | Possibilità di associare anche le categorie alle voci create
-* E molte altre funzioni uniche che rendono questo software semplice e veloce da utilizzare!
+* Personalizzazioni grafiche e numerosi shortcode
+* Widget personalizzabili
+* Ottimizzato per PASW**2013** e PASW**2015**
+* Compatibile con tutti i temi WordPress
 
-> **Più di 1000** enti hanno già scelto di affidarsi a questo plugin per l'adempimento normativo del d.lgs. 33/2013!
+> **Più di 2000** enti utilizzano questo plugin!
 
 = CONTATTI & SUPPORTO =
-Per qualsiasi informazione, per segnalare problemi o per suggerire nuove funzioni, è attivo il forum di supporto su [supporto.marcomilesi.ml](http://supporto.marcomilesi.ml/)
+Per qualsiasi informazione, segnalare problemi o fornire feedback, seguici su [wpgov.it](https://www.wpgov.it/)
 
 http://www.youtube.com/watch?v=qWj9hvzNSlg
 
@@ -77,9 +73,64 @@ Puoi trovare la documentazione su [wpgov.it](https://wpgov.it/soluzioni/amminist
 == Changelog ==
 > Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
 
-> **AGGIORNAMENTO D.lgs. 97/2016**
-> Fino a completamento del periodo di transizione comparirà un messaggio durante la gestione dei documenti di Amministrazione Trasparente, indicante gli aggiornamenti effettuati al sistema (aggiunta, rimozione e modifica di sezioni)
-> [wpgov.it/2017/d-lgs-972016-aggiornamento-del-software-gestione-wordpress](https://wpgov.it/2017/d-lgs-972016-aggiornamento-del-software-gestione-wordpress/)
+= 7.1.1 20210616 =
+* Compatibility check
+* Minor improvements and bugfix
+
+= 7.1 20200721 =
+* **Aggiunto** supporto author al post Type
+* Miglioramenti minori
+
+= Versione 7.0 21/06/2020 =
+* **Aggiunto** supporto alla modalità REST
+* **Aggiunto** supporto **GUTENBERG** (se attivato nel sito)
+* **Rimosso** supporto alla categorizzazione delle voci tramite post
+* **Aggiunti** filtri di sviluppo e test
+* **Corretto** errore PHP per richiamo widget deprecato
+* **Miglioramenti** vari con eliminazione di parti di codice obsolete
+* **Miglioramenti** generali e ottimizzazione di alcune funzioni
+* **Compatibilità** certificata per WP > 5.4
+
+= Versione 6.3.1 01/01/2019 =
+* **Testato** con WP 5.x
+
+= Versione 6.3 17/11/2017 =
+* Aggiunta modalità DEBUG per velocizzare il supporto tecnico
+
+= Versione 6.2 16/11/2017 =
+* HOTFIX **CRITICO** PER WORDPRESS 4.9
+* Descrizione errore: la funzione get_term_link di WordPress non accetta più il nome del termine di tassonomia (sezione at) in caso di caratteri speciali
+* Grazie a **Alberto, Christian, Fabio, Francesco, Lorenzo e Verdiana** per la pronta segnalazione
+
+= Versione 6.1.2 16/11/2017 =
+* Version bump to retrigger update function on some websites
+
+= Versione 6.1.1 07/11/2017 =
+* WP 4.9 Tested
+* readme.txt changes
+* Version bump to retrigger update function on some websites
+
+= Versione 6.1 25/10/2017 =
+* Ridenominazione di alcune sezioni
+* Aggiunta alcune sezioni
+* **Per informazioni dettagliate consultare il menù "Trasparenza > Adeguamenti" in WordPress
+
+= Versione 6.0 27/07/2017 =
+* Ridenominazione di alcune sezioni
+* Aggiunta macrosezione con sezioni non più richieste dalla normativa
+* Aggiunta nuova pagina **Adeguamenti** con la lista delle modifiche alle sezioni di AT
+* Miglioramenti importanti lato tecnico
+* Riscrittura sistema di impostazioni [verificare corretta migrazione delle opzioni]
+* Spostato menù impostazioni in "Trasparenza > Impostazioni"
+* Questo aggiornamento è parte di un progetto di razionalizzazione e miglioramenti dei software [wpgov.it](https://www.wpgov.it/)]
+
+= Versione 5.3.2 07/04/2017 (!) =
+* BUGFIX
+
+= Versione 5.3.1 07/04/2017 (!) =
+* Aggiunta 2 sezioni 97/2016
+* Modificato nome 1 sezione 97/2016
+* Miglioramenti vari
 
 = Versione 5.3 13/01/2017 (!) =
 * **Riscritto** sistema di widget: comparirà un messaggio in amministrazione per richiederne la riconfigurazione nei siti in cui è attivo. Il nuovo widget sfrutta nuove API di WP e gestisce le sezioni in modo dinamico

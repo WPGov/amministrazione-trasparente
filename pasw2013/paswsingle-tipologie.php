@@ -32,7 +32,7 @@
             <p class="postmeta">
             <?php if (!is_page()) { ?>
             <span class="postauthor"><?php _e('Pubblicato il '); ?><?php the_time('j M y') ?> <?php _e('alle'); ?> <?php the_time() ?></span>
-            &bull; <a href="<?php echo get_permalink(get_option('at_option_id')); ?>" title="Torna all'Indice">Torna all'Indice</a><?php edit_post_link(__('Edit'), ' &bull; ', ''); ?>            <br/>            <?php the_taxonomies(', '); ?>
+            &bull; <a href="<?php echo get_permalink( at_option('page_id')); ?>" title="Torna all'Indice">Torna all'Indice</a><?php edit_post_link(__('Edit'), ' &bull; ', ''); ?>            <br/>            <?php the_taxonomies(', '); ?>
             <?php } ?>
             </p>
 
@@ -66,5 +66,3 @@ echo '</div>';
 <?php include(TEMPLATEPATH . '/rightsidebar.php'); ?>
 
 <?php get_footer(); ?>
-
-

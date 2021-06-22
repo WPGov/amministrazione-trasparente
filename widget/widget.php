@@ -2,16 +2,14 @@
 
 class atWidget extends WP_Widget {
 
-    function atWidget() {
-
+    public function __construct() {
         parent::__construct( 'atwidget', 'Amministrazione Trasparente', array( 'description' => 'Lista delle sezioni relative alla trasparenza' ) );
-
     }
 
     function widget( $args, $instance ) {
         extract($args);
 
-		if ( $instance['logic'] && !( is_tax( 'tipologie' ) || is_singular( 'amm-trasparente' ) || is_page(get_option('at_option_id'))) ) {
+		if ( $instance['logic'] && !( is_tax( 'tipologie' ) || is_singular( 'amm-trasparente' ) || is_page( at_option('page_id') )) ) {
 			return;
 		}
 
@@ -30,12 +28,12 @@ class atWidget extends WP_Widget {
     function update( $new_instance, $old_instance ) {
 		delete_option( 'at_option_widget' );
 		delete_option( 'at_logic_widget' );
-		
+
 		$instance = $old_instance;
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['expandable'] = isset($new_instance['expandable']) ? 1 : 0;
         $instance['logic'] = isset($new_instance['logic']) ? 1 : 0;
-		
+
         return wp_parse_args( (array) $instance, self::get_defaults() );
 
     }
@@ -52,7 +50,7 @@ class atWidget extends WP_Widget {
     function form( $instance ) {
 
 		$instance = wp_parse_args( (array) $instance, self::get_defaults() );
-		
+
         $title = esc_attr($instance['title']); ?>
         <p><label for="<?php echo $this->get_field_id('title');?>">
         Titolo: <input class="widefat" id="<?php echo $this->get_field_id('title');?>" name="<?php echo $this->get_field_name('title');?>" type="text" value="<?php echo $title; ?>" />

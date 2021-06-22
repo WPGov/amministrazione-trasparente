@@ -21,20 +21,15 @@ switch ($col) {
 
 echo '
 <style type="text/css">
-
-.at-tableclass {'.$atscss.'padding:0px 0px 0px 5px;position:relative;min-width: 200px;}
-
+.at-tableclass {'.esc_html($atscss).'padding:0px 0px 0px 5px;position:relative;min-width: 200px;}
 ';
 
-if ($atw2) { echo '#at-s-23 { '.$atw2.' }'; }
+if ($atw2) { echo '#at-s-23 { '.esc_html($atw2).' }'; }
 
 echo '
 .at-tableclass h3 a { text-decoration:none; cursor: default; }
-
 .at-tableclass h3 {  border: 1px solid #eee; padding: 8px 10px; background: #FBFBFB; }
-
 .at-tableclass ul li a { text-decoration: none; }
-
 .at-number { float: right;
   border-radius: 20px;
   background-color: white;
@@ -44,7 +39,6 @@ echo '
   text-align: center;
   font-size: 0.8em;
   font-weight: bold; }
-
 </style>
 <!-- Generato con il Plugin Wordpress Amministrazione Trasparente v.' . get_option('at_version_number') . '-->';
 
@@ -71,11 +65,11 @@ foreach (amministrazionetrasparente_getarray() as $inner) {
         $query = new WP_Query( $args );
         $fount_posts = $query->found_posts;
         $atcounter = $atcounter + $fount_posts;
-        if ( !$fount_posts && get_option('at_option_opacity') ) {
+        if ( !$fount_posts && at_option('opacity') ) {
             $opty = 'style="opacity: 0.5;"';
         } else { $opty = ''; }
         $atreturn .= '<li '.$opty.'>';
-        $atreturn .= '<a href="' . get_term_link( $value, 'tipologie' ) . '" title="' . $value . '">' . $value . '</a>';
+        $atreturn .= '<a href="' . get_term_link( get_term_by('name', $value, 'tipologie'), 'tipologie' ) . '" title="' . $value . '">' . $value . '</a>';
         $atreturn .= '</li>';
     }
     $atreturn .= '</ul>';
@@ -85,8 +79,8 @@ foreach (amministrazionetrasparente_getarray() as $inner) {
     $sez_l = strtolower(preg_replace('/[^a-zA-Z]+/', '', $inner[0]));
     echo '<h3>';
     if ($con) { echo '<div class="at-number">'.$atcounter.'</div>'; }
-    echo '<a id="'.$sez_l.'" href="#'.$sez_l.'">'.$inner[0].'</a></h3>';
-    echo $atreturn;
+    echo esc_html( '<a id="'.$sez_l.'" href="#'.$sez_l.'">'.$inner[0].'</a></h3>' );
+    echo esc_html( $atreturn );
 
     echo '</div>';
 
@@ -96,13 +90,12 @@ foreach (amministrazionetrasparente_getarray() as $inner) {
     }
 }
 
-if ( get_option('wpgov_show_love') ) {
+if ( at_option('show_love') ) {
     echo '<span style="width:98%;border: 1px solid #eee;padding: 8px 10px;background: #FBFBFB;float: left;font-size: 0.7em;">
         <span style="float:right;">
             <a href="http://www.wpgov.it" target="_blank" alt="Software WPGov" title="Software WPGov">wpgov.it</a>
         </span>
-        Sezione gestita con il plugin WordPress
-        <a href="http://wordpress.org/plugins/amministrazione-trasparente/" rel="nofollow" title="Plugin Amministrazione Trasparente per Wordpress">Amministrazione Trasparente</a>
+        Powered by <a href="http://wordpress.org/plugins/amministrazione-trasparente/" rel="nofollow" title="Plugin Amministrazione Trasparente per Wordpress">Amministrazione Trasparente</a>
         </span>';
 }
  echo '<div class="clear"></div>';
