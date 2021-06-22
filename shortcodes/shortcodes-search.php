@@ -5,15 +5,14 @@
 <?php
 function get_terms_dropdown($taxonomies, $args){
     $myterms = get_terms($taxonomies, $args);
-    $optionname = "tipologie";
-    $output ="<select style='width: 100px;' name='".$optionname."'><option value=''>Filtra</option>'";
+    $output ="<select style='width: 100px;' name='tipologie'><option value=''>Filtra</option>'";
 
     foreach($myterms as $term){
         $term_taxonomy=$term->YOURTAXONOMY; //CHANGE ME
         $term_slug=$term->slug;
         $term_name =$term->name;
         $link = $term_slug;
-        $output .="<option name='".$link."' value='".$link."'>".$term_name."</option>";
+        $output .="<option name='".esc_attr( $link )."' value='".esc_attr($link)."'>".esc_html($term_name)."</option>";
     }
     $output .="</select>";
 return $output;

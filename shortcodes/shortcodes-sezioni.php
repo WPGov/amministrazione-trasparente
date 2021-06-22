@@ -70,7 +70,7 @@ foreach (amministrazionetrasparente_getarray() as $inner) {
             $opty = 'style="opacity: 0.5;"';
         } else { $opty = ''; }
         $atreturn .= '<li '.$opty.'>';
-        $atreturn .= '<a href="' . get_term_link( get_term_by('name', $value, 'tipologie'), 'tipologie' ) . '" title="' . $value . '">' . $value . '</a>';
+        $atreturn .= '<a href="' . get_term_link( get_term_by('name', $value, 'tipologie'), 'tipologie' ) . '" title="' . esc_attr( $value ). '">' . esc_html( $value ). '</a>';
         $atreturn .= '</li>';
     }
     $atreturn .= '</ul>';
