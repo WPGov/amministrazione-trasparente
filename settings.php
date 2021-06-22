@@ -130,19 +130,19 @@
       $merge = array_merge( $merge, $inner[1] );
     }
     sort($merge);
-    echo 'Numero sezioni supportate dal plugin: '.esc_html( $count );
+    echo 'Numero sezioni supportate dal plugin: '.sanitize_text_field( $count );
     echo '<hr>';
     echo '<div style="width:45%;float:left;"><h4>Installate:</h4>';
     echo '<ul>';
     foreach ( $terms as $term ) {
-      echo '<li>'.esc_html($term->name).'</li>';
+      echo '<li>'.sanitize_text_field($term->name).'</li>';
     }
     echo '</ul>';
     echo '</div>';
     echo '<div style="width:45%;float:left;"><h4>Supportate:</h4>';
     echo '<ul>';
     foreach ( $merge as $merge_item ) {
-      echo '<li>'.esc_html($merge_item).'</li>';
+      echo '<li>'.sanitize_text_field($merge_item).'</li>';
     }
     echo '</ul>';
     echo '</div>';

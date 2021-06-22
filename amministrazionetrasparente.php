@@ -281,11 +281,6 @@ require_once(plugin_dir_path(__FILE__) . 'redirector.php');
 require_once(plugin_dir_path(__FILE__) . 'admin-messages.php');
 
 add_action( 'admin_menu', function() {
-  /*
-  add_submenu_page( 'edit.php?post_type=amm-trasparente', 'Adeguamenti', 'Adeguamenti', 'manage_options', 'wpgov_checkup', function() {
-    include(plugin_dir_path(__FILE__) . 'checkup.php');
-  } );
-  */
   add_submenu_page( 'edit.php?post_type=amm-trasparente', 'Impostazioni', 'Impostazioni', 'publish_posts', 'wpgov_at', function() {
     include(plugin_dir_path(__FILE__) . 'settings.php');
   } );

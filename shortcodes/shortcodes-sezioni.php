@@ -21,10 +21,10 @@ switch ($col) {
 
 echo '
 <style type="text/css">
-.at-tableclass {'.esc_html($atscss).'padding:0px 0px 0px 5px;position:relative;min-width: 200px;}
+.at-tableclass {'.$atscss.'padding:0px 0px 0px 5px;position:relative;min-width: 200px;}
 ';
 
-if ($atw2) { echo '#at-s-23 { '.esc_html($atw2).' }'; }
+if ($atw2) { echo '#at-s-23 { '.$atw2.' }'; }
 
 echo '
 .at-tableclass h3 a { text-decoration:none; cursor: default; }
@@ -40,7 +40,7 @@ echo '
   font-size: 0.8em;
   font-weight: bold; }
 </style>
-<!-- Generato con il Plugin Wordpress Amministrazione Trasparente v.' . get_option('at_version_number') . '-->';
+<!-- Generato con il Plugin Wordpress Amministrazione Trasparente v.' . sanitize_text_field( get_option('at_version_number') ) . '-->';
 
 if ($bar) {
     echo '<div style="border: 1px solid #eee; padding: 8px 10px; background: #FBFBFB;">';
@@ -61,6 +61,7 @@ foreach (amministrazionetrasparente_getarray() as $inner) {
     $atreturn = '<ul>';
     $atcounter = 0;
     foreach ($inner[1] as $value) {
+        $value = sanitize_text_field( $value );
         $args = array( 'taxonomy' => 'tipologie', 'term' => $value );
         $query = new WP_Query( $args );
         $fount_posts = $query->found_posts;
@@ -78,9 +79,9 @@ foreach (amministrazionetrasparente_getarray() as $inner) {
 
     $sez_l = strtolower(preg_replace('/[^a-zA-Z]+/', '', $inner[0]));
     echo '<h3>';
-    if ($con) { echo '<div class="at-number">'.$atcounter.'</div>'; }
-    echo esc_html( '<a id="'.$sez_l.'" href="#'.$sez_l.'">'.$inner[0].'</a></h3>' );
-    echo esc_html( $atreturn );
+    if ($con) { echo '<div class="at-number">'.esc_attr( $atcounter ).'</div>'; }
+    echo '<a id="'.$sez_l.'" href="#'.$sez_l.'">'.esc_attr( $inner[0] ).'</a></h3>';
+    echo $atreturn;
 
     echo '</div>';
 
