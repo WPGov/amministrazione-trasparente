@@ -117,5 +117,5 @@ add_filter( 'get_sample_permalink_html', function($return, $id, $new_title, $new
 		$return = "<strong>" . __("Redirect:", 'redirect-by-custom-field') . "</strong> " . esc_html($redirect) . "<style>#titlediv {margin-bottom: 30px;}</style><br/>" . $return;
 	}
 	return $return;
-}', 10, 4);
+}, 10, 4);
 
