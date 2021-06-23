@@ -47,9 +47,7 @@ function at_save_aturl_meta($post_id, $post) {
 			if(!$value) delete_post_meta($post->ID, $key); // Delete if blank
 		}
 	}
-
 }
-
 add_action('save_post', 'at_save_aturl_meta', 1, 2); // save the custom fields
 
 // Redirect basato sul plugin "Redirect by Custom Field" di Michael 芳貴 Erlewine ============================================
@@ -114,9 +112,10 @@ function at_get_redirect_url($id) {
 	return false;
 }
 
-add_filter('get_sample_permalink_html', 'at_redirect_display_modifier', 10, 4);
-function at_redirect_display_modifier($return, $id, $new_title, $new_slug) {
-	if ( $redirect = get_redirect_url($id) )
+add_filter( 'get_sample_permalink_html', function($return, $id, $new_title, $new_slug) {
+	if ( $redirect = at_get_redirect_url($id) ) {
 		$return = "<strong>" . __("Redirect:", 'redirect-by-custom-field') . "</strong> " . esc_html($redirect) . "<style>#titlediv {margin-bottom: 30px;}</style><br/>" . $return;
+	}
 	return $return;
-}
+}', 10, 4);
+
