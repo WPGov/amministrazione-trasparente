@@ -3,7 +3,7 @@
 Plugin Name: Amministrazione Trasparente
 Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
 Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
-Version: 7.1.6
+Version: 7.2
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: https://www.marcomilesi.com
@@ -53,8 +53,6 @@ add_action('init', function(){
 }, 200);
 
 add_action( 'init', function() {
-
-  // Custom Post Type
     $labels = array(
         'name' => 'Amministrazione Trasparente',
         'singular_name' => 'Documento Trasparenza',
@@ -95,10 +93,10 @@ add_action( 'init', function() {
 
     $args = array(
         'labels' => $labels,
-        'hierarchical' => true,
+        'hierarchical' => false,
         'description' => 'trasparenza',
         'taxonomies' => $taxonomysupport,
-        'supports' => array( 'title', 'editor', 'excerpt', 'revisions', 'fe-attributes', 'author' ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'revisions', 'fe-attributes', 'author', 'page-attributes' ),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -118,7 +116,6 @@ add_action( 'init', function() {
 
     register_post_type( 'amm-trasparente', $args );
 
-    // Taxonomy
     $labels = array(
         'name' => 'Sezioni',
         'singular_name' => 'Sezione',
@@ -137,13 +134,11 @@ add_action( 'init', function() {
         'menu_name' => 'Tipologie',
     );
 
-
     at_option( 'debug' ) || at_option( 'custom_terms' ) ? $cap = array() : $cap = array('manage_terms' => 'utentealieno','edit_terms' => 'utentealieno','delete_terms' => 'utentealieno' );
     $args = array(
         'labels' => $labels,
         'public' => true,
         'show_in_nav_menus' => true,
-        
         'show_in_rest' => true,
         'show_ui' => true,
         'show_tagcloud' => false,
@@ -155,9 +150,6 @@ add_action( 'init', function() {
         'query_var' => true
     );
     register_taxonomy( 'tipologie', array('amm-trasparente'), $args );
-
-    //register_taxonomy_for_object_type( $taxonomy, $object_type );
-
 } );
 
 /* =========== SHORTCODES [at-head] & [at-desc] & [at-table] & [at-list] ============ */
