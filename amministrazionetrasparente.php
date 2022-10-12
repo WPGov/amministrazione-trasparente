@@ -11,7 +11,8 @@ License: GPL Attribution-ShareAlike
 */
 
 add_action( 'init', function() {
-  if(!(function_exists('wpgov_register_taxonomy_areesettori'))){
+	
+  if ( !( function_exists('wpgov_register_taxonomy_areesettori') ) ){
     $labels = array(
       'name' => 'Uffici - Centri di costo',
       'singular_name' => 'Ufficio - Centro di costo',
