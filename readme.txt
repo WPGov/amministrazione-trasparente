@@ -57,7 +57,7 @@ http://www.youtube.com/watch?v=qWj9hvzNSlg
 
 http://www.youtube.com/watch?v=qWj9hvzNSlg
 
-Puoi trovare la documentazione su [wpgov.it](https://wpgov.it/soluzioni/amministrazione-trasparente/)
+Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/category/amministrazione-trasparente)
 
 == Screenshots ==
 1. Menù Laterale
