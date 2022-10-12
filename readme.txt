@@ -3,7 +3,7 @@ Contributors: Milmor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F2JK36SCXKTE2
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
-Tested up to: 6.0
+Tested up to: 6.1
 Version: 7.2.1
 Stable tag: 7.2.1
 License: GPLv2 or later
@@ -72,6 +72,10 @@ Puoi trovare la documentazione su [wpgov.it](https://wpgov.it/soluzioni/amminist
 
 == Changelog ==
 > Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+= 7.2.1 20221013 =
+* Compatibilty check
+* Minor improvements and bugfix
 
 = 7.2 20220313 =
 * **[NEW]** Added page-attributes support for custom post type
