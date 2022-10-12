@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
 Tested up to: 6.1
-Version: 7.2.2
-Stable tag: 7.2.2
+Version: 7.2.3
+Stable tag: 7.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,21 +15,11 @@ Soluzione completa per la gestione della sezione "Amministrazione Trasparente" n
 
 Software completo per la gestione della sezione **Amministrazione Trasparente** ai sensi del D.lgs. n. 33 del 14/03/2013 e successive integrazioni, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
 
-= Vantaggi =
-
-Flessibile, semplice e intuitivo.
-
 > Con questo plugin potrai gestire le sezioni richieste dalla normativa direttamente nel tuo sito WordPress, senza il bisogno di servizi esterni
 
-Il modulo gestisce ogni voce come singolo post velocizzando la pubblicazione e consentendo di inserire file, immagini, testi, link o effettuare un reindirizzamento a un'altro indirizzo.
+Il modulo gestisce ogni voce come singolo post velocizzando la pubblicazione e consentendo di inserire file, immagini, testi, link o effettuare un reindirizzamento ad altro URL.
 
-> [INSTALLAZIONE e CONFIGURAZIONE](http://wordpress.org/plugins/amministrazione-trasparente/installation/) | [MANUALE PDF](https://www.dropbox.com/s/sk6lww0marza4jn/guida_amministrazionetrasparente.pdf?dl=0)
-
-> Comuni | [Comune di San Pellegrino Terme](http://www.comune.sanpellegrinoterme.bg.it/comune/trasparenza/) - [Comune di Bordighera](http://trasparenza.bordighera.it/)
-
-> Scuole | [IIS "Leonardo da Vinci" (OG)](https://www.liceolanusei.edu.it/amministrazione-trasparente/)
-
-= Caratteristiche Principali =
+= Caratteristiche =
 * Aggiornamenti periodici
 * Inserimento flessibile, intuitivo e veloce
 * Supporto per la catalogazione avanzata delle voci (sezioni AT, categorie, tag) e filtraggio dati back-end
@@ -41,17 +31,8 @@ Il modulo gestisce ogni voce come singolo post velocizzando la pubblicazione e c
 * Ottimizzato per PASW**2013** e PASW**2015**
 * Compatibile con tutti i temi WordPress
 
-> **Più di 2000** enti utilizzano questo plugin!
-
 = CONTATTI & SUPPORTO =
 Per qualsiasi informazione, segnalare problemi o fornire feedback, seguici su [wpgov.it](https://www.wpgov.it/)
-
-http://www.youtube.com/watch?v=qWj9hvzNSlg
-
-
-> **ATTENZIONE** | **"For each author’s protection [***] we want to make certain that everyone understands that there is no warranty for this free software.** In accordo con la licenza GPL v.2 con cui questo software viene fornito, **declino** ogni responsabilità per eventuali inadempimenti legislativi e/o altri problemi legali e/o tecnici derivanti, implicitamente o esplicitamente, dall'utilizzo di questo plugin Wordpress o da un'affrettata configurazione dello stesso (ivi compresi eventuali aggiornamenti). E' compito del gestore del sito assicurarsi che il modulo funzioni correttamente e adempia agli obblighi di legge e, al contempo, è obbligo degli operatori/impiegati/dipendenti/funzionari preposti alla gestione dell'Amministrazione Trasparente la pubblicazione degli opportuni dati.
-
-> **EN** | This plugin is developed for **schools, universities, municipalities and local authorities** of **ITALY** and respects their legal parameters. The installation of this plugin on amateur websites and/or portals not subject to 'Amministrazione Trasparente' legislation is a waste of time since the purpose of this software is the posting of data in a legal and validated way.
 
 == Installation ==
 
@@ -73,7 +54,7 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 == Changelog ==
 > Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
 
-= 7.2.1 20221013 =
+= 7.2.3 20221013 =
 * Compatibilty check
 * Minor improvements and bugfix
 
