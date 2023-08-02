@@ -29,7 +29,8 @@ function at_setting_tabs( $id ) {
   <div id="welcome-panel" class="welcome-panel">
     <div class="welcome-panel-column-container">
       <ul>
-        <li><a href="https://docs.wpgov.it/docs/category/amministrazione-trasparente" class="welcome-icon welcome-write-blog">Documentazione</a></li>
+        <li><a href="https://github.com/WPGov/amministrazione-trasparente/wiki" class="welcome-icon welcome-write-blog">Documentazione del plugin</a></li>
+        <li><a href="https://github.com/WPGov/amministrazione-trasparente" class="welcome-icon dashicons-editor-code">Migliora il codice su GitHub</a></li>
         <li><div class="welcome-icon dashicons-admin-users">Creato da <a href="https://www.marcomilesi.com/">Marco Milesi</a></div></li>
         <li><div class="welcome-icon dashicons-groups">Con il contributo di <a href="http://www.porteapertesulweb.it/">Porte Aperte sul Web</a></div></li>
       </ul>
@@ -79,7 +80,7 @@ function at_setting_tabs( $id ) {
       foreach ( $diff as $x ) {
         $duplicate_term = get_term_by('id', $x, 'tipologie');
         if ( $duplicate_term && $duplicate_term->name ) {
-          $alert_duplicates .= '- '.$duplicate_term->name . '\n';
+          $alert_duplicates .= '- '.esc_js($duplicate_term->name). '\n';
         }
       }
     }
@@ -88,7 +89,9 @@ function at_setting_tabs( $id ) {
     if ( wp_count_terms( 'tipologie' ) != count( array_count_values( $selected_sections ) ) ) {
       foreach( $atTerms as $term ) {
         if ( !in_array( $term->term_id, $selected_sections_unique ) ) {
-          $alert_count .= '- '.$term->name . '\n';
+          $alert_count .= '- '.esc_js($term->name) . '\n';
+          $max = max( array_keys( $selected_sections_unique ) );
+          $selected_sections_unique[ ++$max ] = $term->term_id;
         }
       }
       $warning_count = '<b style="color:red;">[Attenzione: '.(wp_count_terms( 'tipologie' ) - count( $selected_sections ) ).' tipologie non sono associate a un gruppo - <a href="#" onclick="alert(\''.$alert_count.'\');">Clicca qui per i dettagli</a>]</b>';
@@ -113,9 +116,7 @@ function at_setting_tabs( $id ) {
     settings_fields( 'wpgov_at_option_groups' );
 
     $options = get_option( 'atGroupConf' );
-    #update_option('atGroupConf', array());
-    #delete_option('atGroupConf');
-
+    
     submit_button();
   
     foreach ( at_get_taxonomy_groups() as $group ) {
