@@ -3,32 +3,29 @@ Contributors: Milmor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F2JK36SCXKTE2
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
-Tested up to: 6.1
-Version: 7.2.3
-Stable tag: 7.2.3
+Tested up to: 6.3
+Version: 8.0.1
+Stable tag: 8.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Soluzione completa per la gestione della sezione "Amministrazione Trasparente" nelle Pubbliche Amministrazioni (D.lgs. 33/2013)
+Plugin completo per la gestione documentale di Amministrazione Trasparente nelle Pubbliche Amministrazioni (D.lgs. 33/2013)
 
 == Description ==
 
-Software completo per la gestione della sezione **Amministrazione Trasparente** ai sensi del D.lgs. n. 33 del 14/03/2013 e successive integrazioni, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
+Plugin completo per la gestione documentale di **Amministrazione Trasparente** (D.lgs. 33 del 14/03/2013 e successive integrazioni), riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni.
 
 > Con questo plugin potrai gestire le sezioni richieste dalla normativa direttamente nel tuo sito WordPress, senza il bisogno di servizi esterni
 
-Il modulo gestisce ogni voce come singolo post velocizzando la pubblicazione e consentendo di inserire file, immagini, testi, link o effettuare un reindirizzamento ad altro URL.
-
 = Caratteristiche =
-* Aggiornamenti periodici
-* Inserimento flessibile, intuitivo e veloce
-* Supporto per la catalogazione avanzata delle voci (sezioni AT, categorie, tag) e filtraggio dati back-end
+* Aggiornamento costante, tecnico e normativo
+* Inserimento rapido e intuitivo
+* Supporto per la catalogazione avanzata delle voci (tassonomie e tag) e filtri amministrativi per la ricerca dei contenuti
 * Soluzione ideale per ogni tipo di contenuto (documenti, testo, link,...)
 * Gestione avanzata dei ruoli ("map-cap ready")
 * Funzione di reindirizzamento delle voci a link esterni
 * Personalizzazioni grafiche e numerosi shortcode
 * Widget personalizzabili
-* Ottimizzato per PASW**2013** e PASW**2015**
 * Compatibile con tutti i temi WordPress
 
 = CONTATTI & SUPPORTO =
@@ -54,7 +51,7 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 == Changelog ==
 > Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
 
-= 8.0 20230731 [!Major upgrade]=
+= 8.0.1 20230731 [!Major upgrade]=
 **Attenzione: si consiglia backup prima dell'aggiornamento**
 
 * **[NEW]** Added ability to customize AT categories
@@ -62,6 +59,7 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 * Improved post count in shortcode
 * Various under-the-hood major improvements
 * Old code and resources cleanup
+* Tested up to WP 6.3
 
 = 7.2.3 20221013 =
 * Compatibilty check
