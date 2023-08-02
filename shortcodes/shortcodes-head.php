@@ -1,3 +1,9 @@
+<?php 
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+?>
+
 <h3>Sommario</h3>
 <ul>
 <li><a href="#disposizionigenerali">Disposizioni generali</a></li>

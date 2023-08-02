@@ -1,5 +1,13 @@
 <?php
 
+function at_get_taxonomy_groups() {
+      $return = array();
+      foreach ( amministrazionetrasparente_getarray() as $arr ) {
+            $return[] = $arr[0];
+      }
+      return $return;
+}
+
 function amministrazionetrasparente_getarray() {
 
       if ( function_exists('amministrazionetrasparente_getarray_custom') ) {

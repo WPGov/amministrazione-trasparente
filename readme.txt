@@ -54,6 +54,15 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 == Changelog ==
 > Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
 
+= 8.0 20230731 [!Major upgrade]=
+**Attenzione: si consiglia backup prima dell'aggiornamento**
+
+* **[NEW]** Added ability to customize AT categories
+* Add new text is now converted from "Add -> Nuova Voce" to "Add -> Amministrazione Trasparente" in the top bar
+* Improved post count in shortcode
+* Various under-the-hood major improvements
+* Old code and resources cleanup
+
 = 7.2.3 20221013 =
 * Compatibilty check
 * Minor improvements and bugfix

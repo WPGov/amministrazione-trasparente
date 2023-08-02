@@ -3,7 +3,7 @@
 Plugin Name: Amministrazione Trasparente
 Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
 Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
-Version: 7.2.3
+Version: 8.0-PRE
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: https://www.marcomilesi.com
@@ -56,7 +56,7 @@ add_action('init', function(){
 add_action( 'init', function() {
     $labels = array(
         'name' => 'Amministrazione Trasparente',
-        'singular_name' => 'Documento Trasparenza',
+        'singular_name' => 'Amministrazione Trasparente',
         'add_new' => 'Nuova voce',
         'add_new_item' => 'Nuova Voce',
         'edit_item' => 'Modifica Documento',
@@ -92,7 +92,9 @@ add_action( 'init', function() {
       $map_meta_cap_var = 'false';
     }
 
-    $args = array(
+    register_post_type(
+      'amm-trasparente',
+      array(
         'labels' => $labels,
         'hierarchical' => false,
         'description' => 'trasparenza',
@@ -113,9 +115,8 @@ add_action( 'init', function() {
         'rewrite' => array('pages'=> true, 'with_front' => false),
         'capability_type' => $at_capability_type,
         'map_meta_cap' => $map_meta_cap_var
-    );
-
-    register_post_type( 'amm-trasparente', $args );
+    )
+  );
 
     $labels = array(
         'name' => 'Sezioni',
@@ -135,8 +136,10 @@ add_action( 'init', function() {
         'menu_name' => 'Tipologie',
     );
 
-    at_option( 'debug' ) || at_option( 'custom_terms' ) ? $cap = array() : $cap = array('manage_terms' => 'utentealieno','edit_terms' => 'utentealieno','delete_terms' => 'utentealieno' );
-    $args = array(
+    register_taxonomy(
+      'tipologie',
+      array('amm-trasparente'),
+      array(
         'labels' => $labels,
         'public' => true,
         'show_in_nav_menus' => true,
@@ -146,12 +149,45 @@ add_action( 'init', function() {
         'show_admin_column' => true,
         'hierarchical' => true,
         'rewrite' => array('hierarchical' => true, 'slug' => 'trasparenza', 'with_front' => false),
-        'capabilities' => array(),
-        'capabilities' => $cap,
+        'capabilities' =>  array(
+          'manage_terms' => 'manage_options',
+          'edit_terms' => 'manage_options',
+          'delete_terms' => 'manage_options',
+          'assign_terms' => 'edit_posts'
+        ),
         'query_var' => true
+      )
     );
-    register_taxonomy( 'tipologie', array('amm-trasparente'), $args );
 } );
+
+
+function at_remove_tax_parent_dropdown() {
+  $screen = get_current_screen();
+
+  if ( 'tipologie' == $screen->taxonomy ) {
+      if ( 'edit-tags' == $screen->base ) {
+          $parent = "$('label[for=parent]').parent()";
+      } elseif ( 'term' == $screen->base ) {
+          $parent = "$('label[for=parent]').parent().parent()";
+      }
+  } else {
+      return;
+  }
+  ?>
+
+  <script type="text/javascript">
+      jQuery(document).ready(function($) {     
+          <?php echo $parent; ?>.remove();       
+      });
+  </script>
+
+  <?php 
+}
+add_action( 'admin_head-edit-tags.php', 'at_remove_tax_parent_dropdown' );
+add_action( 'admin_head-term.php', 'at_remove_tax_parent_dropdown' );
+add_action( 'admin_head-post.php', 'at_remove_tax_parent_dropdown' );
+add_action( 'admin_head-post-new.php', 'at_remove_tax_parent_dropdown' ); 
+
 
 /* =========== SHORTCODES [at-head] & [at-desc] & [at-table] & [at-list] ============ */
 
@@ -183,12 +219,12 @@ add_shortcode('at-list', function($atts) {
     return $atshortcode;
 });
 
-function at_sezioni_shtc($atts) {
-    ob_start();
-    include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-sezioni.php');
-    $atshortcode = ob_get_clean();
-    return $atshortcode;
-} add_shortcode('at-sezioni', 'at_sezioni_shtc');
+add_shortcode('at-sezioni', function($atts) {
+  ob_start();
+  require_once(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-sezioni.php');
+  $atshortcode = ob_get_clean();
+  return $atshortcode;
+} );
 
 function at_search_shtc($atts)  {
     ob_start();
@@ -254,13 +290,16 @@ add_action( 'restrict_manage_posts', function() {
 
 /* Utilità */
 add_action('admin_init', function() {
-  register_setting('wpgov_at_options', 'wpgov_at');
+  register_setting( 'wpgov_at_options', 'wpgov_at' );
+  register_setting( 'wpgov_at_option_groups', 'atGroupConf' );
+  
   $arrayatpv = get_plugin_data ( __FILE__ );
   $nuova_versione = $arrayatpv['Version'];
 
   if ( version_compare( get_option('at_version_number'), $nuova_versione, '<')) {
     if ( !at_option( 'custom_terms' ) ) {
       require(plugin_dir_path(__FILE__) . 'updater.php');
+      at_install_upgrade();
     }
     update_option( 'at_version_number', $nuova_versione );
   }
@@ -279,6 +318,16 @@ add_action( 'admin_menu', function() {
   } );
 } );
 
+add_action( 'admin_enqueue_scripts', function( $hook ) {
+  
+  if ( 'amm-trasparente_page_wpgov_at' != $hook ) {
+      return;
+  }
+
+  wp_enqueue_script( 'at_edit_js', plugin_dir_url( __FILE__ ) . '/inc/js/jquery.multi-select.js', array(), '1.0' );
+  wp_enqueue_style( 'at_edit_css', plugin_dir_url( __FILE__ ) . '/inc/css/multi-select.css', array(), '1.0', false);
+} );
+
 function at_option($name) {
 	$options = get_option('wpgov_at');
 	if (isset($options[$name])) {
@@ -286,4 +335,17 @@ function at_option($name) {
 	}
 	return false;
 }
+
+function at_getGroupConf ( $name = null ) {
+  if ( !$name ) {
+    return get_option('atGroupConf');
+  } else {
+    $options = get_option('atGroupConf');
+    if ( isset( $options[ $name ] )) {
+      return $options[ $name ];
+    }
+  }
+	return array();
+}
+
 ?>

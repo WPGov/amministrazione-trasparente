@@ -1,3 +1,9 @@
+<?php 
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+?>
+
 <div class="riassunto" style="padding:20px;font-size:0.8em;">
 
 <span style="float:right;">

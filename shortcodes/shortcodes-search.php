@@ -1,3 +1,9 @@
+<?php 
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+?>
+
 <form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">
     <div>
         <input type="text" name="s" placeholder="Cerca..." />
