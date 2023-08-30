@@ -44,11 +44,13 @@ function at_setting_tabs( $id ) {
     at_setting_tabs( 2 );
 
     echo '<pre>';
-    print_r( get_option('wpgov_at') );
+    $e = filter_var_array( get_option('wpgov_at'), FILTER_SANITIZE_SPECIAL_CHARS);
+    print_r( $e );
     echo '</pre>';
 
     echo '<pre>';
-    print_r( get_option('atGroupConf') );
+    $e = filter_var_array( get_option('atGroupConf'), FILTER_SANITIZE_SPECIAL_CHARS);
+    print_r( $e );
     echo '</pre>';
 
   } else if ( isset($_GET['at_action']) ) {
