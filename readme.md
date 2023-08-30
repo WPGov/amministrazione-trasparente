@@ -6,5 +6,5 @@ Plugin WordPress per la gestione della sezione Amministrazione Trasparente ai se
 
 ## Credits
 
-Copyright © 2012-2022 **Marco Milesi**
+Copyright © 2012-2023 **Marco Milesi**
 www.marcomilesi.com - www.wpgov.it

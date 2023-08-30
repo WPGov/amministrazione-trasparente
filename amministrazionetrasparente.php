@@ -2,8 +2,8 @@
 /*
 Plugin Name: Amministrazione Trasparente
 Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
-Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013, riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni, in attuazione dell’art. 1, comma 35, della legge n. 190/2012.
-Version: 8.0.2
+Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013
+Version: 8.0.5
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: https://www.marcomilesi.com
@@ -250,22 +250,23 @@ function at_force_template( $template ) {
     if( is_tax( 'tipologie' ) || is_tax( 'annirif' ) || is_tax( 'ditte' ) ) {
         $theme_name = strtolower(wp_get_theme());
         if (get_template() == 'pasw2013' || $theme_name == 'pasw2013' || at_option('pasw_2013') == '1') { //Se è attivata la modalità "Forza template PASW"
-            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/pasw2013/paswarchive-tipologie.php';
+            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/inc/pasw2013/paswarchive-tipologie.php';
         }
 
     } else if ( is_singular( 'amm-trasparente' ) ) {
         $theme_name = strtolower(wp_get_theme());
         if (get_template() == 'pasw2013' || $theme_name == 'pasw2013' || at_option('pasw_2013') == '1') { //Se è attivata la modalità "Forza template PASW"
-            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/pasw2013/paswsingle-tipologie.php';
+            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/inc/pasw2013/paswsingle-tipologie.php';
         }
     }
     return $template;
 }
 add_filter( 'template_include', 'at_force_template' );
 
-add_action( 'admin_enqueue_scripts', function() { // searchTaxonomyGT by Gabriel Tavares // http://www.gtplugins.com
-  wp_register_script('searchTaxonomyGT_at_js', plugins_url('/includes/searchTaxonomyGT.js', __FILE__));
-	wp_enqueue_script('searchTaxonomyGT_at_js');
+// searchTaxonomyGT by Gabriel Tavares http://www.gtplugins.com
+add_action( 'admin_enqueue_scripts', function() {
+  wp_register_script('at_searchTaxonomyGT', plugins_url('/inc/js/searchTaxonomyGT.js', __FILE__));
+	wp_enqueue_script('at_searchTaxonomyGT');
 } );
 
 add_action( 'restrict_manage_posts', function() {
@@ -310,7 +311,9 @@ add_action('admin_init', function() {
 require_once(plugin_dir_path(__FILE__) . 'sezioni.php');
 require_once(plugin_dir_path(__FILE__) . 'widget/widget.php');
 require_once(plugin_dir_path(__FILE__) . 'redirector.php');
-require_once(plugin_dir_path(__FILE__) . 'admin-messages.php');
+
+require_once(plugin_dir_path(__FILE__) . 'backend.php');
+$AmministrazioneTrasparente_Backend = new AmministrazioneTrasparente_Backend();
 
 add_action( 'admin_menu', function() {
   add_submenu_page( 'edit.php?post_type=amm-trasparente', 'Impostazioni', 'Impostazioni', 'publish_posts', 'wpgov_at', function() {

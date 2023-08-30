@@ -1,10 +1,8 @@
 <?php
 //Crea Metabox
-add_action( 'add_meta_boxes', 'add_aturls_metaboxes' );
-
-function add_aturls_metaboxes() {
+add_action( 'add_meta_boxes', function() {
     add_meta_box('at_redirect_url', 'Reindirizza URL', 'at_redirect_url', 'amm-trasparente', 'side', 'high');
-}
+} );
 
 function at_redirect_url() {
     global $post;

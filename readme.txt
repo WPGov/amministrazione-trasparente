@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
 Tested up to: 6.3
-Version: 8.0.2
-Stable tag: 8.0.2
+Version: 8.0.5
+Stable tag: 8.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,12 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 
 == Changelog ==
 > Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+= 8.0.5 20230830 =
+* Fixed security bug - CVSS 3.1
+* Aggiunta data di ultima modifica nella lista amministrativa per il custom post type amm-trasparente
+* Miglioramenti prestazionali
+* Rimozione di risorse interne non più utili
 
 = 8.0.1 20230731 [!Major upgrade]=
 **Attenzione: si consiglia backup prima dell'aggiornamento**
