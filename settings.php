@@ -44,14 +44,24 @@ function at_setting_tabs( $id ) {
     at_setting_tabs( 2 );
 
     echo '<pre>';
-    $e = filter_var_array( get_option('wpgov_at'), FILTER_SANITIZE_SPECIAL_CHARS);
-    print_r( $e );
+    $a = get_option('wpgov_at');
+    if ( is_array( $a ) ) {
+      $e = filter_var_array( get_option('wpgov_at'), FILTER_SANITIZE_SPECIAL_CHARS);
+      print_r( $e );
+    } else {
+      echo 'Nessuna impostazione presente';
+    }
     echo '</pre>';
 
     echo '<pre>';
-    $e = filter_var_array( get_option('atGroupConf'), FILTER_SANITIZE_SPECIAL_CHARS);
-    print_r( $e );
-    echo '</pre>';
+    $a = get_option('atGroupConf');
+    if ( is_array( $a ) ) {
+      $e = filter_var_array( $a, FILTER_SANITIZE_SPECIAL_CHARS);
+      print_r( $e );
+    } else {
+      echo 'Nessuna configurazione presente';
+    }
+    echo '</pre>';  
 
   } else if ( isset($_GET['at_action']) ) {
 
@@ -73,7 +83,6 @@ function at_setting_tabs( $id ) {
         $selected_sections = array_merge( $selected_sections, $arrayTipologie );
         $selected_sections_unique = array_unique( array_merge( $selected_sections, $arrayTipologie ) );
       }
-      #array_walk_recursive( at_getGroupConf(), function($a) use ($selected_sections) { $selected_sections[] = $a; });
     }
 
     $diff = array_diff_assoc($selected_sections, array_unique($selected_sections) );
@@ -92,11 +101,14 @@ function at_setting_tabs( $id ) {
       foreach( $atTerms as $term ) {
         if ( !in_array( $term->term_id, $selected_sections_unique ) ) {
           $alert_count .= '- '.esc_js($term->name) . '\n';
-          $max = max( array_keys( $selected_sections_unique ) );
-          $selected_sections_unique[ ++$max ] = $term->term_id;
+          if ( !empty( $selected_sections_unique) ) {
+            $max = max( array_keys( $selected_sections_unique ) );
+            $selected_sections_unique[ ++$max ] = $term->term_id;
+          }
+          
         }
       }
-      $warning_count = '<b style="color:red;">[Attenzione: '.(wp_count_terms( 'tipologie' ) - count( $selected_sections ) ).' tipologie non sono associate a un gruppo - <a href="#" onclick="alert(\''.$alert_count.'\');">Clicca qui per i dettagli</a>]</b>';
+      $warning_count = '<b style="color:red;">[Attenzione: '.(wp_count_terms( 'tipologie' ) - count( array_count_values( $selected_sections ) ) ).' tipologie non sono associate a un gruppo - <a href="#" onclick="alert(\''.$alert_count.'\');">Clicca qui per i dettagli</a>]</b>';
     } else {
       $warning_count = '<b style="color:green">[OK]</b>';
     }
@@ -122,8 +134,7 @@ function at_setting_tabs( $id ) {
     submit_button();
   
     foreach ( at_get_taxonomy_groups() as $group ) {
-      echo '<details style="margin:30px;"><summary><b>'.$group.'</b>';
-      
+      echo '<details style="margin:10px;"><summary style="margin: 10px;"><b>'.$group.'</b>';
       $sezione = at_getGroupConf( sanitize_title( $group ) );
       echo ' ('.count($sezione).')';
       echo '</summary>';
@@ -144,7 +155,7 @@ function at_setting_tabs( $id ) {
       echo $dropdownOptionsEcho;
       echo '</select>';
 
-      echo '<script>jQuery("#'.sanitize_title( $group ).'").multiSelect( { keepOrder: true });</script>';
+      echo '<script>jQuery("#'.sanitize_title( $group ).'").multiSelect( { keepOrder: true, selectableHeader: "Disponibili:", selectionHeader: "Attive in questa sezione:" } );</script>';
       echo '</div>';
       echo '</details>';
     }

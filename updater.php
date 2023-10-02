@@ -14,8 +14,7 @@ function at_install_upgrade() {
         }
         at_generate_desc();
     }
-    if ( get_option('at_version_number') && version_compare( get_option('at_version_number'), 8, '<') ) {
-
+    if ( empty( get_option('atGroupConf') ) ) {
         $settings_default = array();
         foreach (amministrazionetrasparente_getarray() as $inner) {
             if ( !isset( $settings_default[ sanitize_title( $inner[0] ) ] ) ) {
