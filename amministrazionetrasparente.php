@@ -3,7 +3,7 @@
 Plugin Name: Amministrazione Trasparente
 Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
 Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013
-Version: 8.0.10
+Version: 8.1
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: https://www.marcomilesi.com
@@ -289,7 +289,6 @@ add_action( 'restrict_manage_posts', function() {
     }
 } );
 
-/* Utilità */
 add_action('admin_init', function() {
   register_setting( 'wpgov_at_options', 'wpgov_at' );
   register_setting( 'wpgov_at_option_groups', 'atGroupConf' );
@@ -306,8 +305,6 @@ add_action('admin_init', function() {
   }
 });
 
-/* =========== FUNZIONI INCLUSE ============ */
-
 require_once(plugin_dir_path(__FILE__) . 'sezioni.php');
 require_once(plugin_dir_path(__FILE__) . 'widget/widget.php');
 require_once(plugin_dir_path(__FILE__) . 'redirector.php');
@@ -316,7 +313,7 @@ require_once(plugin_dir_path(__FILE__) . 'backend.php');
 $AmministrazioneTrasparente_Backend = new AmministrazioneTrasparente_Backend();
 
 add_action( 'admin_menu', function() {
-  add_submenu_page( 'edit.php?post_type=amm-trasparente', 'Impostazioni', 'Impostazioni', 'publish_posts', 'wpgov_at', function() {
+  add_submenu_page( 'edit.php?post_type=amm-trasparente', 'Impostazioni', 'Impostazioni', 'manage_options', 'wpgov_at', function() {
     include(plugin_dir_path(__FILE__) . 'settings.php');
   } );
 } );

@@ -17,7 +17,7 @@ function at_setting_tabs( $id ) {
     }
   $r = '<h2 class="nav-tab-wrapper wp-clearfix">
     <a href="edit.php?post_type=amm-trasparente&page=wpgov_at" class="nav-tab'.$id0.'">Impostazioni</a>
-    <a href="edit.php?post_type=amm-trasparente&page=wpgov_at&at_action=config" class="nav-tab'.$id1.'">Gruppi e tipologie</a>
+    <a href="edit.php?post_type=amm-trasparente&page=wpgov_at&at_action=config" class="nav-tab'.$id1.'">Tipologie e gruppi</a>
     <a href="edit.php?post_type=amm-trasparente&page=wpgov_at&at_action=debug" class="nav-tab'.$id2.'">Debug</a>
   </h2>';
   echo $r;
@@ -95,6 +95,10 @@ function at_setting_tabs( $id ) {
         }
       }
     }
+
+    $green_svg = '<span style="color:green"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg></span>';
+    $red_svg = '<span style="color:red;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg></span>';
+
     $warning_count = '';
     $alert_count = 'Elenco tipologie non associate:\n';
     if ( wp_count_terms( 'tipologie' ) != count( array_count_values( $selected_sections ) ) ) {
@@ -108,30 +112,49 @@ function at_setting_tabs( $id ) {
           
         }
       }
-      $warning_count = '<b style="color:red;">[Attenzione: '.(wp_count_terms( 'tipologie' ) - count( array_count_values( $selected_sections ) ) ).' tipologie non sono associate a un gruppo - <a href="#" onclick="alert(\''.$alert_count.'\');">Clicca qui per i dettagli</a>]</b>';
+      $warning_count = ' '.(wp_count_terms( 'tipologie' ) - count( array_count_values( $selected_sections ) ) ).' tipologie non sono associate a un gruppo - <a href="#" onclick="alert(\''.$alert_count.'\');">Clicca qui per i dettagli</a></b>';
     } else {
-      $warning_count = '<b style="color:green">[OK]</b>';
+      $warning_count = $green_svg;
     }
 
     $warning_duplicates = '';
     if ( ( count( $selected_sections ) - count( array_count_values( $selected_sections ) ) ) != 0 ) {
-      $warning_duplicates = '<b style="color:red;">[Questa situazione è OK solo se intenzionale - <a href="#" onclick="alert(\''.$alert_duplicates.'\');">Clicca qui per i dettagli</a>]</b>';
+      $warning_duplicates = $red_svg.' Verificare se intenzionale - <a href="#" onclick="alert(\''.$alert_duplicates.'\');">Clicca qui per i dettagli</a>';
     } else {
-      $warning_duplicates = '<b style="color:green">[OK]</b>';
+      $warning_duplicates = $green_svg;
     }
-    echo '<p><b>'.wp_count_terms( 'tipologie' ).'</b> tipologie gestite di cui:
-    <ul>
-    <li><b>'. count( array_count_values( $selected_sections ) ) . '</b> tipologie correttamente associate nei gruppi '.$warning_count.'</li>
-    <li><b>'.( count( $selected_sections ) - count( array_count_values( $selected_sections ) ) ) . '</b> tipologie sono associate a più gruppi '.$warning_duplicates.'</li>
-    </ul>
-    </p>';
+    echo '<h3>Tipologie</h3>';
     
+    echo '<table class="widefat fixed" cellspacing="0">
+    <thead>
+    <tr>
+            <th id="columnname" class="manage-column column-columnname" scope="col">Controllo</th>
+            <th id="columnname" class="manage-column column-columnname num" scope="col">Esito</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr class="alternate">
+            <td class="column-columnname">'.wp_count_terms( 'tipologie' ).'</b> tipologie gestite</td>
+            <td class="column-columnname">'.(wp_count_terms( 'tipologie' ) > 0 ? $green_svg : $red_svg ).'</td>
+        </tr>
+        <tr>
+            <td class="column-columnname">'. count( array_count_values( $selected_sections ) ) . '</b> tipologie correttamente associate nei gruppi</td>
+            <td class="column-columnname">'.$warning_count.'</td>
+        </tr>
+        <tr class="alternate">
+            <td class="column-columnname">'.( count( $selected_sections ) - count( array_count_values( $selected_sections ) ) ) . '</b> tipologie sono associate a più gruppi</td>
+            <td class="column-columnname">'.$warning_duplicates.'</td>
+        </tr>
+    </tbody>
+  </table>
+  <br><br>
+  <a href="edit-tags.php?taxonomy=tipologie&post_type=amm-trasparente" class="button-secondary">Aggiungi o modifica tipologie</a>
+  <hr><h3>Gruppi</h3>';
     echo '<form method="post" action="options.php">';
     settings_fields( 'wpgov_at_option_groups' );
 
     $options = get_option( 'atGroupConf' );
     
-    submit_button();
   
     foreach ( at_get_taxonomy_groups() as $group ) {
       echo '<details style="margin:10px;"><summary style="margin: 10px;"><b>'.$group.'</b>';
@@ -155,20 +178,18 @@ function at_setting_tabs( $id ) {
       echo $dropdownOptionsEcho;
       echo '</select>';
 
-      echo '<script>jQuery("#'.sanitize_title( $group ).'").multiSelect( { keepOrder: true, selectableHeader: "Disponibili:", selectionHeader: "Attive in questa sezione:" } );</script>';
+      echo '<script>jQuery("#'.sanitize_title( $group ).'").multiSelect( { keepOrder: true, selectableHeader: "Disponibili:", selectionHeader: "Selezionate:" } );</script>';
       echo '</div>';
       echo '</details>';
     }
 
-    submit_button();
+    submit_button( 'Salva configurazione' );
     echo '</form>';
 
   } else {
     at_setting_tabs( 0 );
 
     echo '<form method="post" action="options.php">';
-
-    submit_button();
 
     settings_fields( 'wpgov_at_options');
     $options = get_option( 'wpgov_at');
@@ -274,7 +295,7 @@ function at_setting_tabs( $id ) {
 
 <?php
     
-  submit_button();
+  submit_button( 'Salva configurazione' );
   echo '</form>';
   if ( at_option('debug') ) {
     echo '<hr><h3>DEBUG</h3>';
