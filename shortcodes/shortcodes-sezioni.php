@@ -70,6 +70,10 @@ foreach ( at_get_taxonomy_groups() as $groupName ) {
         
         $term = get_term_by('id', $idTipologia, 'tipologie');
 
+        if ( !$term ) {
+            continue;
+        }
+
         $query = new WP_Query(
             array(
                 'posts_per_page' => -1,

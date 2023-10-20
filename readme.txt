@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
 Tested up to: 6.3
-Version: 8.1
-Stable tag: 8.1
+Version: 8.1.1
+Stable tag: 8.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,7 +49,12 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 
 
 == Changelog ==
-> Questa è la lista completa di tutti gli aggiornamenti, test e correzioni. Ogni volta che una nuova versione viene rilasciata assicuratevi di aggiornare il prima possibile per usufruire delle ultime migliorie!
+> Di seguito la lista completa di aggiornamenti, test e correzioni. Aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+= 8.1.1 20231020 =
+* **Corretto** bug per ancoraggio html tag [at-head] e [at-list]
+* **Corretto** bug di caricamento dinamico gruppi tag [at-head]
+* **Corretto** bug di visualizzazione in caso di cancellazione sezioni senza riconfigurazione gruppi
 
 = 8.1 20231019 =
 * **Migliorato** pannello impostazioni
@@ -319,7 +324,6 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 * **Migliorata** chiarezza dei messaggi di errore, e rimozione di alcuni di essi
 * **Rimossa** pagina "Info & Aiuto" [integrata in Impostazioni]
 * Aggiunto link donazione PayPal
-
 
 = Versione 3.6.5 30/12/2013 =
 * **Corretto** possibile conflitto della funzione di ricerca nel metabox tipologie (Nuova Voce) // AGGIORNATO IN PARALLELO AD AVCP
