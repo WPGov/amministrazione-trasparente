@@ -18,9 +18,46 @@ class atWidget extends WP_Widget {
         echo wp_kses_post( $before_title.$instance['title'].$after_title );
 
 		if ( isset($instance['expandable']) && $instance['expandable'] != 0 ) {
-			include(plugin_dir_path(__FILE__) . 'widget-output-collapse.php');
+			echo '<style type="text/css">
+.row {vertical-align: top; height:auto !important; font-size: 0.9em;}
+.list {display:none;}
+.show {display:none;}
+.hide:target + .show {display:inline;}
+.hide:target {display:none;}
+.hide:target ~ .list {display:inline;}
+@media print {.hide, .show {display:none;}}
+</style>';
+            $atcontatore = 0;
+            foreach ( at_get_taxonomy_groups() as $groupName ) {
+                $tipologieGruppo = at_getGroupConf( sanitize_title( $groupName ) );
+
+                echo '<div class="row">
+                <a href="#hide'.++$atcontatore.'" class="hide" id="hide'.$atcontatore.'">[+]&nbsp;<b>'.esc_attr( $groupName ).'</b></a>
+                <a href="#show'.$atcontatore.'" class="show" id="show'.$atcontatore.'">[-]&nbsp;<b>'.esc_attr( $groupName ).'</b></a>
+                <div class="list">';
+                $atreturn = '';
+                foreach ( $tipologieGruppo as $idTipologia ) {
+                    $term = get_term_by('id', $idTipologia, 'tipologie');
+                    $atreturn .= '<li><a href="' . get_term_link( $term ) . '" title="' . esc_attr( $term->name ). '">' . esc_html( $term->name ). '</a></li>';
+                }
+                echo '<ul>'.$atreturn.'</ul>';
+
+                echo '</div></div>';
+            }
 		} else {
-			include(plugin_dir_path(__FILE__) . 'widget-output-list.php');
+            foreach ( at_get_taxonomy_groups() as $groupName ) {
+                $tipologieGruppo = at_getGroupConf( sanitize_title( $groupName ) );
+
+                echo '<ul><li><b>'.esc_attr( $groupName ).'</b>';
+                $atreturn = '';
+                foreach ( $tipologieGruppo as $idTipologia ) {
+                    $term = get_term_by('id', $idTipologia, 'tipologie');
+                    $atreturn .= '<li><a href="' . get_term_link( $term ) . '" title="' . esc_attr( $term->name ). '">' . esc_html( $term->name ). '</a></li>';
+                }
+                echo '<ul>'.$atreturn.'</ul>';
+            
+                echo '</li></ul>';
+            }
         }
         echo wp_kses_post( $after_widget );
     }
@@ -31,20 +68,18 @@ class atWidget extends WP_Widget {
 
 		$instance = $old_instance;
         $instance['title'] = strip_tags($new_instance['title']);
-        $instance['expandable'] = isset($new_instance['expandable']) ? 1 : 0;
-        $instance['logic'] = isset($new_instance['logic']) ? 1 : 0;
+        $instance['expandable'] = isset($new_instance['expandable']) && $new_instance['expandable'] ? 1 : 0;
+        $instance['logic'] = isset($new_instance['logic']) && $new_instance['logic'] ? 1 : 0;
 
         return wp_parse_args( (array) $instance, self::get_defaults() );
-
     }
 
 	 private static function get_defaults() {
-        $defaults = array(
+        return array(
             'title' => 'Amministrazione Trasparente',
             'expandable' => 0,
             'logic' => 0
         );
-        return $defaults;
     }
 
     function form( $instance ) {
