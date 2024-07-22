@@ -16,8 +16,8 @@ function at_setting_tabs( $id ) {
       break;
     }
   $r = '<h2 class="nav-tab-wrapper wp-clearfix">
-    <a href="edit.php?post_type=amm-trasparente&page=wpgov_at" class="nav-tab'.$id0.'">Impostazioni</a>
-    <a href="edit.php?post_type=amm-trasparente&page=wpgov_at&at_action=config" class="nav-tab'.$id1.'">Tipologie e gruppi</a>
+    <a href="edit.php?post_type=amm-trasparente&page=wpgov_at" class="nav-tab'.$id0.'">Generale</a>
+    <a href="edit.php?post_type=amm-trasparente&page=wpgov_at&at_action=config" class="nav-tab'.$id1.'">Gestione sezioni</a>
     <a href="edit.php?post_type=amm-trasparente&page=wpgov_at&at_action=debug" class="nav-tab'.$id2.'">Debug</a>
   </h2>';
   echo $r;
@@ -148,6 +148,7 @@ function at_setting_tabs( $id ) {
     </tbody>
   </table>
   <br><br>
+  <p>Puoi aggiungere o modificare le singole sezioni di Amministrazione trasparente:</p>
   <a href="edit-tags.php?taxonomy=tipologie&post_type=amm-trasparente" class="button-secondary">Aggiungi o modifica tipologie</a>
   <hr><h3>Gruppi</h3>';
     echo '<form method="post" action="options.php">';
@@ -203,7 +204,7 @@ function at_setting_tabs( $id ) {
               <input id="at_option_id" type="number" min="0" name="wpgov_at[page_id]" value="<?php echo esc_html( isset( $options['page_id'] ) ? $options['page_id'] : '' ); ?>" size="55" />
               <br>
               <small>ID della pagina di WordPress in cui è stato inserito lo shortcode del plugin).<br>
-              Lista shortcode: <a href="https://docs.wpgov.it/docs/Amministrazione%20Trasparente/shortcode">link</a></small>
+              Lista shortcode: <a href="https://github.com/WPGov/amministrazione-trasparente/wiki/Shortcode">link</a></small>
             </td>
           </tr>
 

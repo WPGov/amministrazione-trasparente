@@ -3,9 +3,9 @@ Contributors: Milmor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F2JK36SCXKTE2
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
-Tested up to: 6.4
-Version: 8.1.2
-Stable tag: 8.1.2
+Tested up to: 6.6
+Version: 8.1.3
+Stable tag: 8.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 
 == Changelog ==
 > Di seguito la lista completa di aggiornamenti, test e correzioni. Aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+= 8.1.3 20240722 =
+* Miglioramenti minori
+* **Testato** e certificato su WP 6.6
 
 = 8.1.2 20231027 =
 * **Corretto** bug di visualizzazione widget in caso di configurazione personalizzata sezioni

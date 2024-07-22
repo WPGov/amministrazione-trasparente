@@ -14,8 +14,8 @@
                 echo '
                 <div class="notice notice-error">
                     <p><b>AMMINISTRAZIONE TRASPARENTE</b></p>
-                    <p>Per iniziare crea una nuova pagina per "Amministrazione Trasparente" utilizzando gli <a href="//wpgov.it/docs/amministrazione-trasparente/" target="_blank">shortcode</a> del plugin.<br />
-                    Ricorda di inserire l\'ID della pagina in <b>Trasparenza -> Impostazioni</b></p>
+                    <p>Crea una nuova pagina per "Amministrazione Trasparente" utilizzando gli <a href="https://github.com/WPGov/amministrazione-trasparente/wiki/Shortcode" target="_blank">shortcode</a> del plugin.<br />
+                    Aggiungere l\'ID della pagina creata in <b>"Trasparenza -> Impostazioni -> Generale -> ID Pagina"</b></p>
                 </div>';
             }
 

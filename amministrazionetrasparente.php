@@ -3,7 +3,7 @@
 Plugin Name: Amministrazione Trasparente
 Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
 Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013
-Version: 8.1.2
+Version: 8.1.3
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: https://www.marcomilesi.com
@@ -250,13 +250,13 @@ function at_force_template( $template ) {
     if( is_tax( 'tipologie' ) || is_tax( 'annirif' ) || is_tax( 'ditte' ) ) {
         $theme_name = strtolower(wp_get_theme());
         if (get_template() == 'pasw2013' || $theme_name == 'pasw2013' || at_option('pasw_2013') == '1') { //Se è attivata la modalità "Forza template PASW"
-            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/inc/pasw2013/paswarchive-tipologie.php';
+            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/includes/pasw2013/paswarchive-tipologie.php';
         }
 
     } else if ( is_singular( 'amm-trasparente' ) ) {
         $theme_name = strtolower(wp_get_theme());
         if (get_template() == 'pasw2013' || $theme_name == 'pasw2013' || at_option('pasw_2013') == '1') { //Se è attivata la modalità "Forza template PASW"
-            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/inc/pasw2013/paswsingle-tipologie.php';
+            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/includes/pasw2013/paswsingle-tipologie.php';
         }
     }
     return $template;
@@ -265,7 +265,7 @@ add_filter( 'template_include', 'at_force_template' );
 
 // searchTaxonomyGT by Gabriel Tavares http://www.gtplugins.com
 add_action( 'admin_enqueue_scripts', function() {
-  wp_register_script('at_searchTaxonomyGT', plugins_url('/inc/js/searchTaxonomyGT.js', __FILE__));
+  wp_register_script('at_searchTaxonomyGT', plugins_url('/includes/js/searchTaxonomyGT.js', __FILE__));
 	wp_enqueue_script('at_searchTaxonomyGT');
 } );
 
@@ -324,8 +324,8 @@ add_action( 'admin_enqueue_scripts', function( $hook ) {
       return;
   }
 
-  wp_enqueue_script( 'at_edit_js', plugin_dir_url( __FILE__ ) . '/inc/js/jquery.multi-select.js', array(), '1.0' );
-  wp_enqueue_style( 'at_edit_css', plugin_dir_url( __FILE__ ) . '/inc/css/multi-select.css', array(), '1.0', false);
+  wp_enqueue_script( 'at_edit_js', plugin_dir_url( __FILE__ ) . '/includes/js/jquery.multi-select.js', array(), '1.0' );
+  wp_enqueue_style( 'at_edit_css', plugin_dir_url( __FILE__ ) . '/includes/css/multi-select.css', array(), '1.0', false);
 } );
 
 function at_option($name) {
