@@ -29,6 +29,7 @@ wp.blocks.registerBlockType('amministrazione-trasparente/page-widget', {
     edit: function(props) {
         const { attributes, setAttributes, className, style } = props;
         const columns = parseInt(attributes.col) || 2;
+        const blockProps = useBlockProps(); 
 
         // Example static sections for preview
         const sections = [
