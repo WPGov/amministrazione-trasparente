@@ -3,7 +3,7 @@
 Plugin Name: Amministrazione Trasparente
 Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
 Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013
-Version: 8.1.4
+Version: 9.0
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: https://www.marcomilesi.com
@@ -11,7 +11,10 @@ License: GPL Attribution-ShareAlike
 */
 
 add_action( 'init', function() {
-	
+  // Only register if the option is enabled
+  if ( !at_option('enable_ucc') ) {
+    return;
+  }
   if ( !( function_exists('wpgov_register_taxonomy_areesettori') ) ){
     $labels = array(
       'name' => 'Uffici - Centri di costo',
@@ -43,15 +46,9 @@ add_action( 'init', function() {
       'rewrite' => true,
       'query_var' => true
     );
-    register_taxonomy( 'areesettori', array('incarico', 'spesa', 'avcp' ), $args );
+    register_taxonomy( 'areesettori', array('incarico', 'spesa', 'avcp', 'amm-trasparente' ), $args );
   }
 });
-
-add_action('init', function(){
-  if ( at_option( 'enable_ucc' ) ) {
-    register_taxonomy_for_object_type( 'areesettori', 'amm-trasparente' );
-  }
-}, 200);
 
 add_action( 'init', function() {
     $labels = array(
@@ -312,10 +309,43 @@ require_once(plugin_dir_path(__FILE__) . 'redirector.php');
 require_once(plugin_dir_path(__FILE__) . 'backend.php');
 $AmministrazioneTrasparente_Backend = new AmministrazioneTrasparente_Backend();
 
+add_action( 'admin_enqueue_scripts', function( $hook ) {
+    // Only load on your plugin settings page
+    if ( isset($_GET['page']) && $_GET['page'] === 'wpgov_at' ) {
+        wp_enqueue_script( 'jquery-ui-sortable' );
+    }
+});
+
 add_action( 'admin_menu', function() {
-  add_submenu_page( 'edit.php?post_type=amm-trasparente', 'Impostazioni', 'Impostazioni', 'manage_options', 'wpgov_at', function() {
-    include(plugin_dir_path(__FILE__) . 'settings.php');
-  } );
+
+    // Dashboard submenu (edit_amm-trasparente)
+    $post_type_object = get_post_type_object('amm-trasparente');
+    $capability = $post_type_object && isset($post_type_object->cap->edit_posts)
+        ? $post_type_object->cap->edit_posts
+        : 'edit_posts';
+
+    add_submenu_page(
+        'edit.php?post_type=amm-trasparente',
+        'Dashboard Amministrazione Trasparente',
+        'Revisione',
+        $capability,
+        'at_tipologie_dashboard',
+        function() {
+            include(plugin_dir_path(__FILE__) . 'dashboard.php');
+        }
+    );
+
+    // Impostazioni submenu (manage_options)
+    add_submenu_page(
+        'edit.php?post_type=amm-trasparente',
+        'Impostazioni',
+        'Impostazioni',
+        'manage_options',
+        'wpgov_at',
+        function() {
+            include(plugin_dir_path(__FILE__) . 'settings.php');
+        }
+    );    
 } );
 
 add_action( 'admin_enqueue_scripts', function( $hook ) {
@@ -348,4 +378,94 @@ function at_getGroupConf ( $name = null ) {
 	return array();
 }
 
-?>
+add_action('pre_get_posts', function($query) {
+    if (
+        is_admin() &&
+        $query->is_main_query() &&
+        isset($_GET['post_type']) &&
+        $_GET['post_type'] === 'amm-trasparente' &&
+        isset($_GET['at_older_than']) &&
+        is_numeric($_GET['at_older_than'])
+    ) {
+        $years = intval($_GET['at_older_than']);
+        $date = date('Y-m-d', strtotime('-' . $years . ' years'));
+        $query->set('date_query', [
+            [
+                'column' => 'post_date',
+                'before' => $date,
+            ]
+        ]);
+    }
+});
+
+// Breadcrumb filter for Design Comuni WordPress theme
+add_filter( 'dci_get_breadcrumb_items', function( $items ) { 
+    
+    if ( is_tax( array( 'tipologie' ) ) ) {
+        // Add home link as first item
+        $items[] = "<a href='" . home_url() . "'>" . __('Home', 'design-comuni-italia') . "</a>";
+
+        $term = get_queried_object();
+        if ( $term && isset( $term->term_id ) ) {
+            $group = function_exists('at_getGroupNameByTerm') ? at_getGroupNameByTerm( $term->term_id ) : '';
+
+            if ( at_option( 'page_id' ) ) {
+                $items[] = "<a href='" . get_permalink( at_option( 'page_id' ) ) . "'>" . get_the_title( at_option( 'page_id' ) ) . "</a>";
+                $items[] = '<a href="' . get_permalink( at_option( 'page_id' ) ) . '#' . sanitize_title( $group ) . '">' . $group . '</a>';
+            }
+            $taxonomy = get_queried_object();
+            $items[] = $taxonomy->name;
+            return $items;
+        }
+    } else if ( get_post_type() == 'amm-trasparente' ) {
+        // Add home link as first item
+        $items[] = "<a href='" . home_url() . "'>" . __('Home', 'design-comuni-italia') . "</a>";
+        
+        $terms = get_the_terms( get_the_ID(), 'tipologie' );
+        if ( $terms && !is_wp_error( $terms ) ) {
+            $group = function_exists('at_getGroupNameByTerm') ? at_getGroupNameByTerm( $terms[0]->term_id ) : '';
+
+            if ( at_option( 'page_id' ) ) {
+                $items[] = "<a href='" . get_permalink( at_option( 'page_id' ) ) . "'>" . get_the_title( at_option( 'page_id' ) ) . "</a>";
+                $items[] = '<a href="' . get_permalink( at_option( 'page_id' ) ) . '#' . sanitize_title( $group ) . '">' . $group . '</a>';
+            }
+
+            $items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $terms[0] ) ), $terms[0]->name );
+        }
+        $items[] = get_the_title();
+        return $items;
+    }
+    return $items;
+}, 10, 2 );
+
+// Filter to change the archive title for 'tipologie' taxonomy
+add_filter( 'get_the_archive_title', function( $title ) {
+    if ( is_tax( 'tipologie' ) ) {
+        $term = get_queried_object();
+        if ( $term && isset( $term->name ) ) {
+            return $term->name;
+        }
+    }
+    return $title;
+});
+
+// Show admin notice when filtering by date
+add_action('admin_notices', function() {
+    if (
+        isset($_GET['post_type']) && $_GET['post_type'] === 'amm-trasparente' &&
+        isset($_GET['at_older_than']) && is_numeric($_GET['at_older_than'])
+    ) {
+        $years = intval($_GET['at_older_than']);
+        ?>
+        <div class="notice notice-warning is-dismissible">
+            <p>
+                <strong>Filtro attivo:</strong>
+                Stai visualizzando solo i documenti più vecchi di <?php echo esc_html($years); ?> anni.
+                <a href="<?php echo esc_url( admin_url('edit.php?post_type=amm-trasparente') ); ?>" class="button" style="margin-left:8px;">Rimuovi filtro</a>
+            </p>
+        </div>
+        <?php
+    }
+});
+
+require_once(plugin_dir_path(__FILE__) . 'gutenberg.php');

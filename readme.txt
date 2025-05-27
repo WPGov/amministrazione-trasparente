@@ -4,38 +4,49 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
 Tested up to: 6.9
-Version: 8.1.4
-Stable tag: 8.1.4
+Version: 9.0
+Stable tag: 9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Plugin completo per la gestione documentale di Amministrazione Trasparente nelle Pubbliche Amministrazioni (D.lgs. 33/2013)
 
-== Description ==
+== Descrizione ==
 
-Plugin completo per la gestione documentale di **Amministrazione Trasparente** (D.lgs. 33 del 14/03/2013 e successive integrazioni), riguardante il riordino della disciplina degli obblighi di pubblicità, trasparenza e diffusione di informazioni da parte delle pubbliche amministrazioni.
+**Amministrazione Trasparente** è il plugin WordPress più completo per la gestione dei documenti e delle sezioni richieste dalla normativa italiana sulla trasparenza amministrativa (D.lgs. 33/2013 e successive integrazioni).  
+Permette di pubblicare, organizzare e mantenere aggiornate tutte le informazioni obbligatorie direttamente dal tuo sito WordPress, senza servizi esterni.
 
-> Con questo plugin potrai gestire le sezioni richieste dalla normativa direttamente nel tuo sito WordPress, senza il bisogno di servizi esterni
+> Gestisci facilmente sezioni, documenti, allegati e filtri, con un'interfaccia intuitiva e aggiornata alle ultime disposizioni di legge.
 
-= Caratteristiche =
-* Aggiornamento costante, tecnico e normativo
-* Inserimento rapido e intuitivo
-* Supporto per la catalogazione avanzata delle voci (tassonomie e tag) e filtri amministrativi per la ricerca dei contenuti
-* Soluzione ideale per ogni tipo di contenuto (documenti, testo, link,...)
-* Gestione avanzata dei ruoli ("map-cap ready")
-* Funzione di reindirizzamento delle voci a link esterni
-* Personalizzazioni grafiche e numerosi shortcode
-* Widget personalizzabili
-* Compatibile con tutti i temi WordPress
+### Caratteristiche principali
 
-= CONTATTI & SUPPORTO =
-Per qualsiasi informazione, segnalare problemi o fornire feedback, seguici su [wpgov.it](https://www.wpgov.it/)
+- **Aggiornamento costante** tecnico e normativo
+- **Inserimento rapido** e intuitivo dei documenti
+- **Catalogazione avanzata** tramite tassonomie, tag e filtri amministrativi
+- **Soluzione ideale** per ogni tipo di contenuto (documenti, testo, link, allegati…)
+- **Gestione avanzata dei ruoli** ("map-cap ready")
+- **Reindirizzamento** delle voci a link esterni
+- **Personalizzazione grafica** e numerosi shortcode
+- **Widget personalizzabili**
+- **Compatibilità** con tutti i temi WordPress, incluso supporto specifico per temi PA (PASW2013, Design Comuni, ecc.)
+- **Dashboard avanzata** per la panoramica e la gestione delle tipologie e dei documenti
+- **Filtri rapidi** per gruppi, ricerca e documenti vecchi (>5 anni)
+- **Notifiche e avvisi** per una gestione più sicura e trasparente
 
-== Installation ==
+### Contatti & Supporto
 
-http://www.youtube.com/watch?v=qWj9hvzNSlg
+Per qualsiasi informazione, segnalazione di problemi o feedback, visita [wpgov.it](https://www.wpgov.it/)  
+Documentazione completa: [docs.wpgov.it](https://docs.wpgov.it/docs/category/amministrazione-trasparente)
 
-Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/category/amministrazione-trasparente)
+== Installazione ==
+
+1. Scarica e installa il plugin tramite la directory di WordPress o carica manualmente la cartella.
+2. Attiva il plugin tramite il menu 'Plugin' di WordPress.
+3. Configura le sezioni e le opzioni tramite il menu "Trasparenza" nel back-end.
+4. Consulta la [documentazione online](https://docs.wpgov.it/docs/category/amministrazione-trasparente) per tutte le funzionalità avanzate.
+
+Video guida:  
+https://www.youtube.com/watch?v=qWj9hvzNSlg
 
 == Screenshots ==
 1. Menù Laterale
@@ -49,7 +60,25 @@ Puoi trovare la documentazione su [docs.wpgov.it](https://docs.wpgov.it/docs/cat
 
 
 == Changelog ==
+
 > Di seguito la lista completa di aggiornamenti, test e correzioni. Aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+= 9.0 2025-05-28 =
+
+* **Nuovo**: Aggiunga funzionalità di dashboard (Trasparenza > Revisione) per una panoramica delle sezioni e dei contenuti (la dashboard è visibile a chiunque abbia diritti di pubblicazione sul post type)
+* **Nuovo**: Dashboard: nuova visualizzazione voci senza tipologia associata
+* **Nuovo**: La dashboard sarà nel tempo arricchita con consigli e funzionalità
+* **Nuovo**: Benvenuto Gutenberg, addio shortcode (facoltativo)! Aggiunto blocco Gutenberg per visualizzare le sezioni e un nuovo stile grafico selezionabile!
+* **Nuovo**: Blocco Gutenberg con diverse opzioni di stile e possibilità di avere voci "espandibili"
+* **Nuovo**: Migliorata pagina delle impostazioni con layout moderno per la personalizzazione delle sezioni e possibilità di riordinare le categorie
+* **Nuovo**: Aggiungo supporto per le breadcrumb del template "Design Comuni WordPress Theme" (modello PNRR) - Modifica applicata automaticamente
+* **Nuovo**: Rimosso prefisso "Sezione:" dal titolo degli archivi delle sezioni
+* **Migliorato**: Accessibilità e prestazioni generali
+* **Corretto**: Bug minori, test e ottimizzazioni varie
+
+= 8.1.3 20240722 =
+* **Migliorato**: Esperienza utente nella dashboard con filtri e notifiche più chiare
+* **Corretto**: Bug minori e ottimizzazioni varie
 
 = 8.1.3 20240722 =
 * Miglioramenti minori

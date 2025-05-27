@@ -1,0 +1,110 @@
+/* Grid and columns: always active */
+.at-sezioni-block {
+    margin: 2em 0;
+    padding: 1em;
+}
+.at-sezioni-grid {
+    display: grid;
+        grid-template-rows: auto;
+
+    gap: 1em;
+}
+.at-sezioni-cols-2 .at-sezioni-grid { grid-template-columns: repeat(2, 1fr); }
+.at-sezioni-cols-3 .at-sezioni-grid { grid-template-columns: repeat(3, 1fr); }
+.at-sezioni-cols-4 .at-sezioni-grid { grid-template-columns: repeat(4, 1fr); }
+
+.at-sezioni-item {
+    /* Remove background from here */
+    padding: 1em;
+}
+
+.at-sezioni-plugin-style .at-sezioni-item {
+    display: block;
+    padding: 1em;
+    background: #f7fafc;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.at-sezioni-plugin-style .at-sezioni-item:hover, .at-sezioni-plugin-style.at-sezioni-expandable .at-sezioni-item.expanded {
+    background-color: color-mix(in srgb, #f7fafc 95%, black);
+}
+.at-sezioni-plugin-style .at-sezioni-terms {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.at-sezioni-plugin-style .at-sezioni-terms li {
+    margin-bottom: 0.3em;
+}
+.at-sezioni-plugin-style .at-sezioni-terms a {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+/* Opacity for empty terms, but no visible text */
+.at-sezioni-term-opacity {
+    opacity: 0.5;
+    pointer-events: auto; /* Keep link active */
+}
+
+/* Hide screen-reader text visually, but keep for assistive tech */
+.at-sezioni-block .screen-reader-text {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    border: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* Expandable Navigation Styles */
+.at-sezioni-expandable .at-sezioni-item {
+    position: relative;
+}
+
+.at-sezioni-expandable .at-sezioni-group-title {
+    cursor: pointer;
+    padding-right: 30px;
+    margin: 0;
+    position: relative;
+}
+
+.at-sezioni-expandable .at-sezioni-group-title::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid currentColor;
+    transition: transform 0.3s ease;
+}
+
+.at-sezioni-expandable .at-sezioni-item.expanded .at-sezioni-group-title::after {
+    transform: translateY(-50%) rotate(-180deg);
+}
+
+.at-sezioni-expandable .at-sezioni-terms {
+    display: none;
+    margin-top: 1em;
+    padding-left: 1em;
+}
+
+.at-sezioni-expandable .at-sezioni-item.expanded .at-sezioni-terms {
+    display: block;
+}
+
+/* Plugin style modifications for expandable navigation */
+.at-sezioni-plugin-style.at-sezioni-expandable .at-sezioni-item {
+    padding: 1em;
+    transition: all 0.3s ease;
+}

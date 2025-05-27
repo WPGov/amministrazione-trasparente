@@ -206,3 +206,34 @@ function amministrazionetrasparente_getarray() {
 
       );
 }
+
+/**
+ * Get the group name by term slug or term ID.
+ * If given a term ID, it fetches the term and uses its slug.
+ * Returns the group name (first element of each array in amministrazionetrasparente_getarray)
+ * if the term slug matches any of the group's terms' slugs.
+ */
+function at_getGroupNameByTerm( $term ) {
+    if ( is_numeric( $term ) ) {
+        $term_obj = get_term( $term, 'tipologie' );
+        if ( ! $term_obj || is_wp_error( $term_obj ) ) {
+            return '';
+        }
+        $slug = $term_obj->slug;
+    } else {
+        $slug = $term;
+    }
+
+    // Build a map of term slugs to group names
+    foreach ( amministrazionetrasparente_getarray() as $group ) {
+        $group_name = $group[0];
+        $terms = $group[1];
+        foreach ( $terms as $term_name ) {
+            $term_obj = get_term_by( 'name', $term_name, 'tipologie' );
+            if ( $term_obj && ! is_wp_error( $term_obj ) && $term_obj->slug === $slug ) {
+                return $group_name;
+            }
+        }
+    }
+    return 'noo';
+}
