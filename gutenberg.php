@@ -5,6 +5,7 @@ class AT_Gutenberg_Blocks {
     public function __construct() {
         add_action('init', [$this, 'register_blocks']);
         add_action('wp_enqueue_scripts', [$this, 'register_frontend_scripts']);
+        add_shortcode('amministrazione-trasparente', [$this, 'shortcode_amministrazione_trasparente']); // <-- Add this line
     }
 
     public function register_frontend_scripts() {
@@ -160,6 +161,41 @@ class AT_Gutenberg_Blocks {
         }
         
         return ob_get_clean();
+    }
+
+    /**
+     * Shortcode handler for [amministrazione-trasparente]
+     * Usage: [amministrazione-trasparente col="2" group_heading_level="h3" show_opacity="0" expandable_navigation="0" anchor=""]
+     */
+    public function shortcode_amministrazione_trasparente($atts = [], $content = null) {
+        $atts = shortcode_atts([
+            'col' => '2',
+            'group_heading_level' => 'h3',
+            'show_opacity' => '0',
+            'expandable_navigation' => '0',
+            'anchor' => '',
+            'class' => '',
+            'style' => '',
+        ], $atts, 'amministrazione-trasparente');
+
+        // Map shortcode atts to block attributes
+        $attributes = [
+            'col' => $atts['col'],
+            'groupHeadingLevel' => $atts['group_heading_level'],
+            'showOpacity' => filter_var($atts['show_opacity'], FILTER_VALIDATE_BOOLEAN),
+            'expandableNavigation' => filter_var($atts['expandable_navigation'], FILTER_VALIDATE_BOOLEAN),
+            'anchor' => $atts['anchor'],
+            'className' => $atts['class'],
+            'style' => $atts['style'],
+        ];
+
+        // Simulate $block object for style detection
+        $block = (object)[
+            'style' => $atts['style'],
+            'className' => $atts['class'],
+        ];
+
+        return $this->render_at_sezioni_block($attributes, '', $block);
     }
 }
 

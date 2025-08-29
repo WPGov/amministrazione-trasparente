@@ -64,8 +64,20 @@ function at_setting_tabs( $id ) {
         echo '<pre>';
         $a = get_option('wpgov_at');
         if ( is_array( $a ) ) {
-            $e = filter_var_array( $a, FILTER_SANITIZE_SPECIAL_CHARS );
-            print_r( $e );
+                $e = array();
+                foreach ( $a as $k => $v ) {
+                    $safe_key = esc_html( $k );
+                    if ( is_array( $v ) ) {
+                        $safe_val = array();
+                        foreach ( $v as $kk => $vv ) {
+                            $safe_val[ esc_html( $kk ) ] = esc_html( $vv );
+                        }
+                    } else {
+                        $safe_val = esc_html( $v );
+                    }
+                    $e[ $safe_key ] = $safe_val;
+                }
+                print_r( $e );
         } else {
             esc_html_e( 'Nessuna impostazione presente', 'amministrazione-trasparente' );
         }
@@ -74,8 +86,20 @@ function at_setting_tabs( $id ) {
         echo '<pre>';
         $a = get_option('atGroupConf');
         if ( is_array( $a ) ) {
-            $e = filter_var_array( $a, FILTER_SANITIZE_SPECIAL_CHARS );
-            print_r( $e );
+                $e = array();
+                foreach ( $a as $k => $v ) {
+                    $safe_key = esc_html( $k );
+                    if ( is_array( $v ) ) {
+                        $safe_val = array();
+                        foreach ( $v as $kk => $vv ) {
+                            $safe_val[ esc_html( $kk ) ] = esc_html( $vv );
+                        }
+                    } else {
+                        $safe_val = esc_html( $v );
+                    }
+                    $e[ $safe_key ] = $safe_val;
+                }
+                print_r( $e );
         } else {
             esc_html_e( 'Nessuna configurazione presente', 'amministrazione-trasparente' );
         }
@@ -84,93 +108,17 @@ function at_setting_tabs( $id ) {
     // Config tab
     } elseif ( isset($_GET['at_action']) ) {
         at_setting_tabs( 1 );
-
-        $selected_sections = [];
-        $selected_sections_unique = [];
-
-        $atTerms = get_terms([
-            'taxonomy'   => 'tipologie',
-            'parent'     => 0,
-            'hide_empty' => false,
-        ]);
-
-        if ( is_array( at_getGroupConf() ) ) {
-            foreach ( at_getGroupConf() as $arrayTipologie ) {
-                $selected_sections = array_merge( $selected_sections, $arrayTipologie );
-                $selected_sections_unique = array_unique( array_merge( $selected_sections, $arrayTipologie ) );
-            }
-        }
-
-        $diff = array_diff_assoc( $selected_sections, array_unique( $selected_sections ) );
-        $alert_duplicates = esc_js( "Elenco duplicati:\n" );
-        if ( is_array( $diff ) && !empty( $diff ) ) {
-            foreach ( $diff as $x ) {
-                $duplicate_term = get_term_by( 'id', $x, 'tipologie' );
-                if ( $duplicate_term && $duplicate_term->name ) {
-                    $alert_duplicates .= '- ' . esc_js( $duplicate_term->name ) . '\n';
-                }
-            }
-        }
-
-        $green_svg = '<span style="color:green" aria-label="OK">&#x2714;</span>';
-        $red_svg = '<span style="color:red;" aria-label="Errore">&#x26A0;</span>';
-
-        $warning_count = '';
-        $alert_count = esc_js( "Elenco tipologie non associate:\n" );
-        if ( wp_count_terms( 'tipologie' ) != count( array_count_values( $selected_sections ) ) ) {
-            foreach ( $atTerms as $term ) {
-                if ( !in_array( $term->term_id, $selected_sections_unique ) ) {
-                    $alert_count .= '- ' . esc_js( $term->name ) . '\n';
-                    if ( !empty( $selected_sections_unique ) ) {
-                        $max = max( array_keys( $selected_sections_unique ) );
-                        $selected_sections_unique[ ++$max ] = $term->term_id;
-                    }
-                }
-            }
-            $warning_count = ' ' . esc_html( wp_count_terms( 'tipologie' ) - count( array_count_values( $selected_sections ) ) ) . ' tipologie non sono associate a un gruppo - <a href="#" onclick="alert(\'' . $alert_count . '\');return false;">Clicca qui per i dettagli</a>';
-        } else {
-            $warning_count = $green_svg;
-        }
-
-        $warning_duplicates = '';
-        if ( ( count( $selected_sections ) - count( array_count_values( $selected_sections ) ) ) != 0 ) {
-            $warning_duplicates = $red_svg . ' Verificare se intenzionale - <a href="#" onclick="alert(\'' . $alert_duplicates . '\');return false;">Clicca qui per i dettagli</a>';
-        } else {
-            $warning_duplicates = $green_svg;
-        }
+        require 'checkup.php';
         ?>
-        <h3><?php esc_html_e( 'Tipologie', 'amministrazione-trasparente' ); ?></h3>
-        <table class="widefat fixed striped" cellspacing="0">
-            <thead>
-                <tr>
-                    <th class="manage-column"><?php esc_html_e( 'Controllo', 'amministrazione-trasparente' ); ?></th>
-                    <th class="manage-column num"><?php esc_html_e( 'Esito', 'amministrazione-trasparente' ); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="alternate">
-                    <td><?php echo esc_html( wp_count_terms( 'tipologie' ) ); ?> tipologie gestite</td>
-                    <td><?php echo ( wp_count_terms( 'tipologie' ) > 0 ? $green_svg : $red_svg ); ?></td>
-                </tr>
-                <tr>
-                    <td><?php echo esc_html( count( array_count_values( $selected_sections ) ) ); ?> tipologie correttamente associate nei gruppi</td>
-                    <td><?php echo $warning_count; ?></td>
-                </tr>
-                <tr class="alternate">
-                    <td><?php echo esc_html( count( $selected_sections ) - count( array_count_values( $selected_sections ) ) ); ?> tipologie sono associate a più gruppi</td>
-                    <td><?php echo $warning_duplicates; ?></td>
-                </tr>
-            </tbody>
-        </table>
-        <br><br>
         <p><?php esc_html_e( 'Puoi aggiungere o modificare le singole sezioni di Amministrazione trasparente:', 'amministrazione-trasparente' ); ?></p>
         <a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=tipologie&post_type=amm-trasparente' ) ); ?>" class="button-secondary"><?php esc_html_e( 'Aggiungi o modifica tipologie', 'amministrazione-trasparente' ); ?></a>
         <hr>
         <h3><?php esc_html_e( 'Gruppi', 'amministrazione-trasparente' ); ?></h3>
-        <?php submit_button( __( 'Salva configurazione', 'amministrazione-trasparente' ) ); ?>
         <form method="post" action="options.php" id="at-groupconf-form">
             <?php
             settings_fields( 'wpgov_at_option_groups' );
+            submit_button( __( 'Salva configurazione', 'amministrazione-trasparente' ) );
+
             $options = get_option( 'atGroupConf' );
             $all_terms = [];
             foreach ( $atTerms as $term ) {
@@ -218,9 +166,11 @@ function at_setting_tabs( $id ) {
                         <button type="button" class="button at-add-term-btn"><?php esc_html_e( 'Aggiungi', 'amministrazione-trasparente' ); ?></button>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php
+                endforeach;
+                submit_button( __( 'Salva configurazione', 'amministrazione-trasparente' ) );
+            ?>
             </div>
-            <?php submit_button( __( 'Salva configurazione', 'amministrazione-trasparente' ) ); ?>
         </form>
         <script>
         jQuery(function($){
@@ -377,32 +327,7 @@ function at_setting_tabs( $id ) {
             </table>
             <?php submit_button( __( 'Salva configurazione', 'amministrazione-trasparente' ) ); ?>
         </form>
-        <?php
-        // Optional: Debug info for advanced users
-        if ( at_option('debug') ) {
-            echo '<hr><h3>DEBUG</h3>';
-            $terms = get_terms( [ 'taxonomy' => 'tipologie', 'hide_empty' => false ] );
-            echo esc_html__( 'Numero sezioni installate:', 'amministrazione-trasparente' ) . ' ' . esc_html( count( $terms ) ) . '<br>';
-            $count = 0;
-            $merge = [];
-            foreach ( amministrazionetrasparente_getarray() as $inner ) {
-                $count += count( $inner[1] );
-                $merge = array_merge( $merge, $inner[1] );
-            }
-            sort( $merge );
-            echo esc_html__( 'Numero sezioni supportate dal plugin:', 'amministrazione-trasparente' ) . ' ' . esc_html( $count );
-            echo '<hr>';
-            echo '<div style="width:45%;float:left;"><h4>' . esc_html__( 'Installate:', 'amministrazione-trasparente' ) . '</h4><ul>';
-            foreach ( $terms as $term ) {
-                echo '<li>' . esc_html( $term->name ) . '</li>';
-            }
-            echo '</ul></div>';
-            echo '<div style="width:45%;float:left;"><h4>' . esc_html__( 'Supportate:', 'amministrazione-trasparente' ) . '</h4><ul>';
-            foreach ( $merge as $merge_item ) {
-                echo '<li>' . esc_html( $merge_item ) . '</li>';
-            }
-            echo '</ul></div><hr>';
-        }
+<?php
     }
     ?>
 </div>

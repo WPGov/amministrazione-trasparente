@@ -2,16 +2,44 @@
 
 function at_get_taxonomy_groups() {
       $return = array();
-      foreach ( amministrazionetrasparente_getarray() as $arr ) {
+      foreach ( amministrazionetrasparente_getarray_default() as $arr ) {
             $return[] = $arr[0];
       }
       return $return;
 }
-
 function amministrazionetrasparente_getarray() {
+      if ( function_exists('amministrazionetrasparente_getarray_default_custom') ) {
+            return amministrazionetrasparente_getarray_default_custom();
+      }
+      
+      $atReturn = array();
 
-      if ( function_exists('amministrazionetrasparente_getarray_custom') ) {
-            return amministrazionetrasparente_getarray_custom();
+      foreach ( at_get_taxonomy_groups() as $groupName ) {
+            
+            $tipologieGruppo = at_getGroupConf( sanitize_title( $groupName ) );
+
+            $innerArray = array();
+            foreach ( $tipologieGruppo as $idTipologia ) {
+                  
+                  $term = get_term_by('id', $idTipologia, 'tipologie');
+                  if ( !$term ) {
+                        continue;
+                  }
+                  $innerArray[] = $term->name;
+            }
+            $atReturn[] = array(
+                  $groupName,
+                  $innerArray
+            );
+      }
+
+      return $atReturn;
+}
+
+function amministrazionetrasparente_getarray_default() {
+
+      if ( function_exists('amministrazionetrasparente_getarray_default_custom') ) {
+            return amministrazionetrasparente_getarray_default_custom();
       }
 
       return array(
@@ -210,7 +238,7 @@ function amministrazionetrasparente_getarray() {
 /**
  * Get the group name by term slug or term ID.
  * If given a term ID, it fetches the term and uses its slug.
- * Returns the group name (first element of each array in amministrazionetrasparente_getarray)
+ * Returns the group name (first element of each array in amministrazionetrasparente_getarray_default)
  * if the term slug matches any of the group's terms' slugs.
  */
 function at_getGroupNameByTerm( $term ) {
@@ -225,7 +253,7 @@ function at_getGroupNameByTerm( $term ) {
     }
 
     // Build a map of term slugs to group names
-    foreach ( amministrazionetrasparente_getarray() as $group ) {
+    foreach ( amministrazionetrasparente_getarray_default() as $group ) {
         $group_name = $group[0];
         $terms = $group[1];
         foreach ( $terms as $term_name ) {

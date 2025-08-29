@@ -5,7 +5,7 @@ function at_install_upgrade() {
     $terms = get_terms( array( 'taxonomy' => 'tipologie', 'hide_empty' => false ) );
     
     if ( count($terms) == 0 ) {
-        foreach (amministrazionetrasparente_getarray() as $inner) {
+        foreach (amministrazionetrasparente_getarray_default() as $inner) {
             foreach ($inner[1] as $value) {
                 if (!term_exists( $value , 'tipologie')) {
                     wp_insert_term( $value , 'tipologie');
@@ -16,7 +16,7 @@ function at_install_upgrade() {
     }
     if ( empty( get_option('atGroupConf') ) ) {
         $settings_default = array();
-        foreach (amministrazionetrasparente_getarray() as $inner) {
+        foreach (amministrazionetrasparente_getarray_default() as $inner) {
             if ( !isset( $settings_default[ sanitize_title( $inner[0] ) ] ) ) {
                 $settings_default[ sanitize_title( $inner[0] ) ] = array();
             }

@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 4.2
 Tested up to: 6.9
-Version: 9.0.2
-Stable tag: 9.0.2
+Version: 9.1
+Stable tag: 9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,12 @@ https://www.youtube.com/watch?v=qWj9hvzNSlg
 == Changelog ==
 
 > Di seguito la lista completa di aggiornamenti, test e correzioni. Aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+= 9.1 2025-06-04 =
+* **Nuovo**: aggiunto shortcode [amministrazione-trasparente] con parametri personalizzabili (vedi FAQ)
+* **Migliorata** compatibilità con modello scuole WordPress in caso di modifica sezioni
+* **Migliorato** pannello gestione sezioni con nuovi modal form per i checkup
+* **Corretto**: Bug minori, test e ottimizzazioni varie
 
 = 9.0 2025-05-28 =
 

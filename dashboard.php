@@ -2,19 +2,13 @@
 
     <div class="wrap">
         <h1 style="margin-bottom: 0.2em;">
-            <span style="display:block;font-size:1em;font-weight:400;color:#555;">Amministrazione Trasparente</span>
+            <span style="display:block;font-size:1em;font-weight:400;color:#555;">Revisione</span>
         </h1>
 
-        <div class="at-intro-banner" style="background:#fff;border:1px solid #e5e5e5;border-radius:8px;padding:24px 32px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.03);display:flex;align-items:center;gap:32px;">
-            <div style="flex:1 1 auto;">
-                <h2 style="margin-top:0;margin-bottom:8px;font-size:1.2em;">Filtra, cerca e visualizza le tipologie di contenuto</h2>
-                <p style="margin:0 0 12px 0;color:#555;">
-                    Utilizza i filtri sottostanti per trovare rapidamente le tipologie di tuo interesse e gestire i relativi documenti pubblicati, in bozza o più vecchi di 5 anni.
-                </p>
-            </div>
-        </div>
-
         <?php
+        
+        require 'checkup.php';
+
         // Get all groups for the filter dropdown
         $all_terms = get_terms([
             'taxonomy' => 'tipologie',
@@ -55,41 +49,6 @@
                 <a href="<?php echo esc_url( admin_url('edit.php?post_type=amm-trasparente&page=at_tipologie_dashboard') ); ?>" class="button" style="margin-left:8px;">Rimuovi filtri</a>
             <?php endif; ?>
         </form>
-
-<?php
-// Highlight posts without "tipologie" taxonomy (moved below intro banner and filters)
-$no_term_args = [
-    'post_type'      => 'amm-trasparente',
-    'posts_per_page' => 20,
-    'tax_query'      => [
-        [
-            'taxonomy' => 'tipologie',
-            'operator' => 'NOT EXISTS',
-        ],
-    ],
-    'fields'         => 'ids',
-];
-$no_term_query = new WP_Query($no_term_args);
-$no_term_count = $no_term_query->found_posts;
-
-if ($no_term_count > 0) {
-    echo '<div style="background:#ffebee;border:2px solid #d32f2f;color:#b71c1c;padding:18px 24px;margin-bottom:24px;border-radius:8px;">';
-    echo '<strong style="color:#d32f2f;font-size:1.3em;">⚠️ Attenzione:</strong> ';
-    echo 'Ci sono <span style="color:#d32f2f;font-weight:bold;font-size:1.4em;">' . intval($no_term_count) . '</span> documenti senza tipologia associata.<br>';
-    echo '<ul style="margin:12px 0 0 20px; color:#b71c1c;">';
-    foreach ($no_term_query->posts as $post_id) {
-        $title = get_the_title($post_id);
-        $edit_link = get_edit_post_link($post_id);
-        echo '<li><a href="' . esc_url($edit_link) . '" style="color:#d32f2f;font-weight:bold;text-decoration:underline;">' . esc_html($title) . '</a></li>';
-    }
-    if ($no_term_count > 20) {
-        echo '<li>...e altri</li>';
-    }
-    echo '</ul>';
-    echo '</div>';
-}
-wp_reset_postdata();
-?>
 
         <style>
             .at-group-row {
