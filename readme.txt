@@ -69,11 +69,7 @@ https://www.youtube.com/watch?v=qWj9hvzNSlg
 * **Nuovo**: checkup della configurazione unificato tra "Revisione" e "Gestione sezioni", con segnalazione di sezioni senza gruppo, sezioni presenti in più gruppi, documenti senza sezione e riferimenti a sezioni eliminate
 * **Migliorato**: prestazioni dello shortcode [at-sezioni] e del blocco Gutenberg, che non eseguono più una query per ogni sezione
 * **Migliorato**: i permalink delle sezioni vengono rigenerati automaticamente all'attivazione e all'aggiornamento del plugin
-* **Migliorato**: sicurezza generale (validazione delle impostazioni salvate, escaping dell'output, blocco dell'accesso diretto ai file)
-* **Migliorato**: widget, shortcode e blocco ignorano le sezioni eliminate invece di generare errori
-* **Corretto**: l'opzione "Abilita uffici e Centri di costo" non veniva salvata
 * **Corretto**: errore nell'uso ripetuto degli shortcode [at-sezioni] e [at-search] nella stessa pagina
-* **Modificato**: il conteggio dei documenti di una sezione considera solo i documenti assegnati direttamente alla sezione, non quelli delle eventuali sottosezioni
 * **Modificato**: requisiti minimi WordPress 5.0 e PHP 7.0
 
 = 9.1 2025-06-04 =
