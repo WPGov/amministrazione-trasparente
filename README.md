@@ -45,7 +45,7 @@ Nei template dei temi, `<?php at_archive_buttons(); ?>` mostra la navigazione tr
 
 ## Contribuire
 
-Segnalazioni e pull request sono benvenute. Mantieni le modifiche circoscritte a un solo argomento.
+Segnalazioni e pull request sono benvenute.
 
 ## Link
 
