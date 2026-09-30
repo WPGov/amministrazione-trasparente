@@ -4,9 +4,9 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
 Requires at least: 5.0
 Requires PHP: 7.0
-Tested up to: 7.2
-Version: 9.2.2
-Stable tag: 9.2.2
+Tested up to: 7.1
+Version: 9.2.3
+Stable tag: 9.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,7 +64,7 @@ https://www.youtube.com/watch?v=qWj9hvzNSlg
 
 > Di seguito la lista completa di aggiornamenti, test e correzioni. Aggiornare il prima possibile per usufruire delle ultime migliorie!
 
-= 9.2.1 2026-09-30 =
+= 9.2.3 2026-09-30 =
 * **Nuovo**: schermata "Revisione" riprogettata: sezioni raggruppate come nella pagina pubblica, viste rapide con contatori (tutte, con bozze, da rivedere, senza documenti), filtro per gruppo e ricerca
 * **Nuovo**: checkup della configurazione unificato tra "Revisione" e "Gestione sezioni", con segnalazione di sezioni senza gruppo, sezioni presenti in più gruppi, documenti senza sezione e riferimenti a sezioni eliminate
 * **Migliorato**: prestazioni dello shortcode [at-sezioni] e del blocco Gutenberg, che non eseguono più una query per ogni sezione
