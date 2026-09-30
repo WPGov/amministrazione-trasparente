@@ -1,5 +1,10 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
+
 function at_get_taxonomy_groups() {
       $return = array();
       foreach ( amministrazionetrasparente_getarray_default() as $arr ) {
@@ -263,5 +268,127 @@ function at_getGroupNameByTerm( $term ) {
             }
         }
     }
-    return 'noo';
+    return '';
+}
+
+/**
+ * Render the taxonomy filter dropdown used by the [at-search] shortcode.
+ *
+ * Lives here rather than in the shortcode template so that including that
+ * template more than once per page cannot redeclare it.
+ */
+function at_get_terms_dropdown( $taxonomies, $args ) {
+    $myterms = get_terms( $taxonomies, $args );
+    $output  = "<select style='width: 100px;' name='tipologie'><option value=''>Filtra</option>";
+
+    if ( is_wp_error( $myterms ) || ! is_array( $myterms ) ) {
+        return $output . '</select>';
+    }
+
+    foreach ( $myterms as $term ) {
+        $output .= "<option value='" . esc_attr( $term->slug ) . "'>" . esc_html( $term->name ) . "</option>";
+    }
+    $output .= "</select>";
+
+    return $output;
+}
+
+/**
+ * Build the section tree used by the "Revisione" screen and by the checkup panel.
+ *
+ * Walks the configured groups once instead of asking at_getGroupNameByTerm() for
+ * every term, so the grouping follows the order the site actually publishes and
+ * costs a single get_terms() call.
+ *
+ * @return array {
+ *     @type array $groups     List of array{name, slug, term_ids} in configured order.
+ *     @type array $terms      Map of term_id => WP_Term for every tipologia.
+ *     @type array $children   Map of parent term_id => child term ids.
+ *     @type array $orphans    Term ids not reachable from any group.
+ *     @type array $duplicates Map of term_id => group slugs, for terms in several groups.
+ *     @type array $stale      Configured ids whose term no longer exists.
+ * }
+ */
+function at_get_revision_tree() {
+    static $tree = null;
+
+    if ( null !== $tree ) {
+        return $tree;
+    }
+
+    $all_terms = get_terms( array( 'taxonomy' => 'tipologie', 'hide_empty' => false ) );
+    $terms     = array();
+    $children  = array();
+
+    if ( ! is_wp_error( $all_terms ) ) {
+        foreach ( $all_terms as $term ) {
+            $terms[ $term->term_id ]     = $term;
+            $children[ $term->parent ][] = $term->term_id;
+        }
+    }
+
+    $groups     = array();
+    $placed_in  = array();
+    $stale      = array();
+
+    foreach ( at_get_taxonomy_groups() as $group_name ) {
+        $slug     = sanitize_title( $group_name );
+        $term_ids = array();
+
+        foreach ( (array) at_getGroupConf( $slug ) as $term_id ) {
+            $term_id = (int) $term_id;
+
+            if ( ! isset( $terms[ $term_id ] ) ) {
+                $stale[] = $term_id;
+                continue;
+            }
+
+            $term_ids[]            = $term_id;
+            $placed_in[ $term_id ] = isset( $placed_in[ $term_id ] ) ? $placed_in[ $term_id ] : array();
+            $placed_in[ $term_id ][] = $group_name;
+        }
+
+        $groups[] = array(
+            'name'     => $group_name,
+            'slug'     => $slug,
+            'term_ids' => $term_ids,
+        );
+    }
+
+    // A term is covered when it is configured in a group, or descends from one that is.
+    $covered = array();
+    $queue   = array_keys( $placed_in );
+
+    while ( $queue ) {
+        $term_id = array_shift( $queue );
+
+        if ( isset( $covered[ $term_id ] ) ) {
+            continue;
+        }
+        $covered[ $term_id ] = true;
+
+        if ( isset( $children[ $term_id ] ) ) {
+            foreach ( $children[ $term_id ] as $child_id ) {
+                $queue[] = $child_id;
+            }
+        }
+    }
+
+    $duplicates = array();
+    foreach ( $placed_in as $term_id => $group_names ) {
+        if ( count( $group_names ) > 1 ) {
+            $duplicates[ $term_id ] = $group_names;
+        }
+    }
+
+    $tree = array(
+        'groups'     => $groups,
+        'terms'      => $terms,
+        'children'   => $children,
+        'orphans'    => array_values( array_diff( array_keys( $terms ), array_keys( $covered ) ) ),
+        'duplicates' => $duplicates,
+        'stale'      => array_values( array_unique( $stale ) ),
+    );
+
+    return $tree;
 }

@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 //Crea Metabox
 add_action( 'add_meta_boxes', function() {
     add_meta_box('at_redirect_url', 'Reindirizza URL', 'at_redirect_url', 'amm-trasparente', 'side', 'high');
@@ -13,7 +18,7 @@ function at_redirect_url() {
     $aturl = get_post_meta($post->ID, '_aturl', true);
     // Echo out the field
 	echo '<p>Reindirizza questo articolo a un altro URL.</p>';
-    echo '<input type="text" name="_aturl" value="' . $aturl  . '" class="widefat" placeholder="https://" />';
+    echo '<input type="text" name="_aturl" value="' . esc_attr( $aturl ) . '" class="widefat" placeholder="https://" />';
 }
 
 // Save the Metabox Data

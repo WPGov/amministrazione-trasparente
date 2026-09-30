@@ -289,7 +289,7 @@ function at_setting_tabs( $id ) {
                         <label for="at_enable_ucc"><?php esc_html_e( 'Abilita uffici e Centri di costo', 'amministrazione-trasparente' ); ?></label>
                     </th>
                     <td>
-                        <input id="at_enable_ucc" name="at_enable_ucc" type="checkbox" value="1" <?php checked( '1', isset( $options['enable_ucc'] ) && $options['enable_ucc'] ); ?> />
+                        <input id="at_enable_ucc" name="wpgov_at[enable_ucc]" type="checkbox" value="1" <?php checked( '1', isset( $options['enable_ucc'] ) && $options['enable_ucc'] ); ?> />
                         <br>
                         <small><?php esc_html_e( 'Consenti di associare i contenuti a una nuova tassonomia per uffici e centri di costo. Consigliato: OFF, attivare solo se necessario.', 'amministrazione-trasparente' ); ?></small>
                     </td>

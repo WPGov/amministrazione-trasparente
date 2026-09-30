@@ -2,10 +2,11 @@
 Contributors: Milmor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F2JK36SCXKTE2
 Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
-Requires at least: 4.2
+Requires at least: 5.0
+Requires PHP: 7.0
 Tested up to: 6.9
-Version: 9.1
-Stable tag: 9.1
+Version: 9.2.1
+Stable tag: 9.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +63,18 @@ https://www.youtube.com/watch?v=qWj9hvzNSlg
 == Changelog ==
 
 > Di seguito la lista completa di aggiornamenti, test e correzioni. Aggiornare il prima possibile per usufruire delle ultime migliorie!
+
+= 9.2.1 2026-09-30 =
+* **Nuovo**: schermata "Revisione" riprogettata: sezioni raggruppate come nella pagina pubblica, viste rapide con contatori (tutte, con bozze, da rivedere, senza documenti), filtro per gruppo e ricerca
+* **Nuovo**: checkup della configurazione unificato tra "Revisione" e "Gestione sezioni", con segnalazione di sezioni senza gruppo, sezioni presenti in più gruppi, documenti senza sezione e riferimenti a sezioni eliminate
+* **Migliorato**: prestazioni dello shortcode [at-sezioni] e del blocco Gutenberg, che non eseguono più una query per ogni sezione
+* **Migliorato**: i permalink delle sezioni vengono rigenerati automaticamente all'attivazione e all'aggiornamento del plugin
+* **Migliorato**: sicurezza generale (validazione delle impostazioni salvate, escaping dell'output, blocco dell'accesso diretto ai file)
+* **Migliorato**: widget, shortcode e blocco ignorano le sezioni eliminate invece di generare errori
+* **Corretto**: l'opzione "Abilita uffici e Centri di costo" non veniva salvata
+* **Corretto**: errore nell'uso ripetuto degli shortcode [at-sezioni] e [at-search] nella stessa pagina
+* **Modificato**: il conteggio dei documenti di una sezione considera solo i documenti assegnati direttamente alla sezione, non quelli delle eventuali sottosezioni
+* **Modificato**: requisiti minimi WordPress 5.0 e PHP 7.0
 
 = 9.1 2025-06-04 =
 * **Nuovo**: aggiunto shortcode [amministrazione-trasparente] con parametri personalizzabili (vedi FAQ)

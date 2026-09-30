@@ -3,14 +3,30 @@
 Plugin Name: Amministrazione Trasparente
 Plugin URI: https://wordpress.org/plugins/amministrazione-trasparente/
 Description: Soluzione completa per la pubblicazione online dei documenti ai sensi del D.lgs. n. 33 del 14/03/2013
-Version: 9.1
+Version: 9.2.1
 Author: Marco Milesi
 Author Email: milesimarco@outlook.com
 Author URI: https://www.marcomilesi.com
 License: GPL Attribution-ShareAlike
+Text Domain: amministrazione-trasparente
+Domain Path: /languages
+Requires at least: 5.0
+Requires PHP: 7.0
 */
 
-add_action( 'init', function() {
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
+define( 'AT_VERSION', '9.2.1' );
+define( 'AT_PLUGIN_FILE', __FILE__ );
+define( 'AT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'AT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * Register the 'areesettori' taxonomy (offices / cost centres).
+ */
+function at_register_taxonomy_areesettori() {
   // Only register if the option is enabled
   if ( !at_option('enable_ucc') ) {
     return;
@@ -48,9 +64,13 @@ add_action( 'init', function() {
     );
     register_taxonomy( 'areesettori', array('incarico', 'spesa', 'avcp', 'amm-trasparente' ), $args );
   }
-});
+}
+add_action( 'init', 'at_register_taxonomy_areesettori' );
 
-add_action( 'init', function() {
+/**
+ * Register the 'amm-trasparente' post type and the 'tipologie' taxonomy.
+ */
+function at_register_post_type() {
     $labels = array(
         'name' => 'Amministrazione Trasparente',
         'singular_name' => 'Amministrazione Trasparente',
@@ -155,7 +175,8 @@ add_action( 'init', function() {
         'query_var' => true
       )
     );
-} );
+}
+add_action( 'init', 'at_register_post_type' );
 
 
 function at_remove_tax_parent_dropdown() {
@@ -190,7 +211,7 @@ add_action( 'admin_head-post-new.php', 'at_remove_tax_parent_dropdown' );
 
 add_shortcode('at-head', function($atts) {
     ob_start();
-    include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-head.php');
+    include(AT_PLUGIN_DIR . 'shortcodes/shortcodes-head.php');
     $atshortcode = ob_get_clean();
     return $atshortcode;
 });
@@ -218,20 +239,20 @@ add_shortcode('at-list', function($atts) {
 
 add_shortcode('at-sezioni', function($atts) {
   ob_start();
-  require_once(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-sezioni.php');
+  require(AT_PLUGIN_DIR . 'shortcodes/shortcodes-sezioni.php');
   $atshortcode = ob_get_clean();
   return $atshortcode;
 } );
 
 function at_search_shtc($atts)  {
     ob_start();
-    include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-search.php');
+    include(AT_PLUGIN_DIR . 'shortcodes/shortcodes-search.php');
     $atshortcode = ob_get_clean();
     return $atshortcode;
 } add_shortcode('at-search', 'at_search_shtc');
 
 function at_archive_buttons() { //Questa funzione va chiamata con at_archive_buttons()
-include(plugin_dir_path(__FILE__) . 'shortcodes/shortcodes-php-archive.php');
+include(AT_PLUGIN_DIR . 'shortcodes/shortcodes-php-archive.php');
 }
 function at_archive_buttons_pasw2015() {
 at_archive_buttons();
@@ -247,13 +268,13 @@ function at_force_template( $template ) {
     if( is_tax( 'tipologie' ) || is_tax( 'annirif' ) || is_tax( 'ditte' ) ) {
         $theme_name = strtolower(wp_get_theme());
         if (get_template() == 'pasw2013' || $theme_name == 'pasw2013' || at_option('pasw_2013') == '1') { //Se è attivata la modalità "Forza template PASW"
-            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/includes/pasw2013/paswarchive-tipologie.php';
+            $template = AT_PLUGIN_DIR . 'includes/pasw2013/paswarchive-tipologie.php';
         }
 
     } else if ( is_singular( 'amm-trasparente' ) ) {
         $theme_name = strtolower(wp_get_theme());
         if (get_template() == 'pasw2013' || $theme_name == 'pasw2013' || at_option('pasw_2013') == '1') { //Se è attivata la modalità "Forza template PASW"
-            $template = WP_PLUGIN_DIR .'/'. plugin_basename( dirname(__FILE__) ) .'/includes/pasw2013/paswsingle-tipologie.php';
+            $template = AT_PLUGIN_DIR . 'includes/pasw2013/paswsingle-tipologie.php';
         }
     }
     return $template;
@@ -262,7 +283,7 @@ add_filter( 'template_include', 'at_force_template' );
 
 // searchTaxonomyGT by Gabriel Tavares http://www.gtplugins.com
 add_action( 'admin_enqueue_scripts', function() {
-  wp_register_script('at_searchTaxonomyGT', plugins_url('/includes/js/searchTaxonomyGT.js', __FILE__));
+  wp_register_script('at_searchTaxonomyGT', AT_PLUGIN_URL . 'includes/js/searchTaxonomyGT.js', array('jquery'), AT_VERSION, true);
 	wp_enqueue_script('at_searchTaxonomyGT');
 } );
 
@@ -286,27 +307,134 @@ add_action( 'restrict_manage_posts', function() {
     }
 } );
 
-add_action('admin_init', function() {
-  register_setting( 'wpgov_at_options', 'wpgov_at' );
-  register_setting( 'wpgov_at_option_groups', 'atGroupConf' );
-  
-  $arrayatpv = get_plugin_data ( __FILE__ );
-  $nuova_versione = $arrayatpv['Version'];
+/**
+ * Sanitize the main settings array.
+ *
+ * Every option is a flag except page_id, so anything unknown is dropped.
+ */
+function at_sanitize_options( $input ) {
+    $output = array();
 
-  if ( version_compare( get_option('at_version_number'), $nuova_versione, '<')) {
-    if ( !at_option( 'custom_terms' ) ) {
-      require(plugin_dir_path(__FILE__) . 'updater.php');
-      at_install_upgrade();
+    if ( ! is_array( $input ) ) {
+        return $output;
     }
-    update_option( 'at_version_number', $nuova_versione );
-  }
+
+    $output['page_id'] = isset( $input['page_id'] ) ? absint( $input['page_id'] ) : 0;
+
+    $flags = array( 'opacity', 'enable_tag', 'show_love', 'enable_ucc', 'map_cap', 'pasw_2013', 'custom_terms' );
+    foreach ( $flags as $flag ) {
+        $output[ $flag ] = ( isset( $input[ $flag ] ) && $input[ $flag ] ) ? '1' : '';
+    }
+
+    return $output;
+}
+
+/**
+ * Sanitize the group configuration.
+ *
+ * Shape is array<group-slug, term-id[]>: keys are slugs of the known groups and
+ * values are ids of terms that still exist.
+ */
+function at_sanitize_group_conf( $input ) {
+    $output = array();
+
+    if ( ! is_array( $input ) ) {
+        return $output;
+    }
+
+    $known_groups = array_map( 'sanitize_title', at_get_taxonomy_groups() );
+
+    foreach ( $input as $group_slug => $term_ids ) {
+        $group_slug = sanitize_title( $group_slug );
+        if ( ! in_array( $group_slug, $known_groups, true ) || ! is_array( $term_ids ) ) {
+            continue;
+        }
+
+        $clean = array();
+        foreach ( $term_ids as $term_id ) {
+            $term_id = absint( $term_id );
+            if ( $term_id && ! in_array( $term_id, $clean, true ) && term_exists( $term_id, 'tipologie' ) ) {
+                $clean[] = $term_id;
+            }
+        }
+        $output[ $group_slug ] = $clean;
+    }
+
+    return $output;
+}
+
+add_action('admin_init', function() {
+  register_setting( 'wpgov_at_options', 'wpgov_at', array( 'sanitize_callback' => 'at_sanitize_options' ) );
+  register_setting( 'wpgov_at_option_groups', 'atGroupConf', array( 'sanitize_callback' => 'at_sanitize_group_conf' ) );
 });
 
-require_once(plugin_dir_path(__FILE__) . 'sezioni.php');
-require_once(plugin_dir_path(__FILE__) . 'widget/widget.php');
-require_once(plugin_dir_path(__FILE__) . 'redirector.php');
+/**
+ * Seed the sections and record the version, when installing or upgrading.
+ *
+ * Requires the 'tipologie' taxonomy to be registered already.
+ */
+function at_maybe_install_upgrade() {
 
-require_once(plugin_dir_path(__FILE__) . 'backend.php');
+  if ( ! version_compare( get_option( 'at_version_number' ), AT_VERSION, '<' ) ) {
+    return false;
+  }
+
+  // Claim the version before doing the work, so two concurrent requests hitting
+  // a fresh install do not both try to seed the terms.
+  update_option( 'at_version_number', AT_VERSION );
+
+  if ( ! at_option( 'custom_terms' ) ) {
+    require_once( AT_PLUGIN_DIR . 'updater.php' );
+    at_install_upgrade();
+  }
+
+  return true;
+}
+
+/**
+ * On activation: register the types, seed the sections, rebuild the rules.
+ *
+ * 'init' has already run by the time this fires, so the post type and taxonomy
+ * are registered here explicitly - both to let at_install_upgrade() insert its
+ * terms and to put the rewrite rules into $wp_rewrite before flushing them.
+ * Without the flush the section archives under /trasparenza/ return 404 until
+ * someone re-saves the permalinks by hand.
+ */
+register_activation_hook( __FILE__, function() {
+  at_register_taxonomy_areesettori();
+  at_register_post_type();
+  at_maybe_install_upgrade();
+  flush_rewrite_rules();
+} );
+
+/**
+ * Upgrades installed over an existing copy never run the activation hook, so
+ * catch them on 'init' once the registrations at the default priority are done.
+ */
+add_action( 'init', function() {
+  if ( at_maybe_install_upgrade() ) {
+    // Soft flush: the plugin only adds database rules, never .htaccess ones, and
+    // this may run on an anonymous front-end request that cannot write the file.
+    flush_rewrite_rules( false );
+  }
+}, 99 );
+
+/**
+ * On deactivation, drop the cached rules so WordPress regenerates them without
+ * ours on the next request.
+ *
+ * flush_rewrite_rules() would be wrong here: the plugin is still loaded for the
+ * current request, so it would just save our own rules back again.
+ */
+register_deactivation_hook( __FILE__, function() {
+  delete_option( 'rewrite_rules' );
+} );
+
+require_once(AT_PLUGIN_DIR . 'sezioni.php');
+require_once(AT_PLUGIN_DIR . 'widget/widget.php');
+require_once(AT_PLUGIN_DIR . 'redirector.php');
+
+require_once(AT_PLUGIN_DIR . 'backend.php');
 $AmministrazioneTrasparente_Backend = new AmministrazioneTrasparente_Backend();
 
 add_action( 'admin_enqueue_scripts', function( $hook ) {
@@ -331,7 +459,7 @@ add_action( 'admin_menu', function() {
         $capability,
         'at_tipologie_dashboard',
         function() {
-            include(plugin_dir_path(__FILE__) . 'dashboard.php');
+            include(AT_PLUGIN_DIR . 'dashboard.php');
         }
     );
 
@@ -343,19 +471,31 @@ add_action( 'admin_menu', function() {
         'manage_options',
         'wpgov_at',
         function() {
-            include(plugin_dir_path(__FILE__) . 'settings.php');
+            include(AT_PLUGIN_DIR . 'settings.php');
         }
     );    
 } );
 
 add_action( 'admin_enqueue_scripts', function( $hook ) {
-  
-  if ( 'amm-trasparente_page_wpgov_at' != $hook ) {
+
+  $at_screens = array(
+    'amm-trasparente_page_wpgov_at',                // Impostazioni (la scheda Gestione sezioni mostra il checkup)
+    'amm-trasparente_page_at_tipologie_dashboard',  // Revisione
+  );
+
+  if ( ! in_array( $hook, $at_screens, true ) ) {
       return;
   }
 
-  wp_enqueue_script( 'at_edit_js', plugin_dir_url( __FILE__ ) . '/includes/js/jquery.multi-select.js', array(), '1.0' );
-  wp_enqueue_style( 'at_edit_css', plugin_dir_url( __FILE__ ) . '/includes/css/multi-select.css', array(), '1.0', false);
+  wp_enqueue_style( 'at_revisione_css', AT_PLUGIN_URL . 'includes/css/admin-revisione.css', array( 'dashicons' ), AT_VERSION );
+  wp_enqueue_script( 'at_revisione_js', AT_PLUGIN_URL . 'includes/js/admin-revisione.js', array(), AT_VERSION, true );
+
+  if ( 'amm-trasparente_page_wpgov_at' !== $hook ) {
+      return;
+  }
+
+  wp_enqueue_script( 'at_edit_js', AT_PLUGIN_URL . 'includes/js/jquery.multi-select.js', array(), AT_VERSION );
+  wp_enqueue_style( 'at_edit_css', AT_PLUGIN_URL . 'includes/css/multi-select.css', array(), AT_VERSION, 'all');
 } );
 
 function at_option($name) {
@@ -410,8 +550,10 @@ add_filter( 'dci_get_breadcrumb_items', function( $items ) {
             $group = function_exists('at_getGroupNameByTerm') ? at_getGroupNameByTerm( $term->term_id ) : '';
 
             if ( at_option( 'page_id' ) ) {
-                $items[] = "<a href='" . get_permalink( at_option( 'page_id' ) ) . "'>" . get_the_title( at_option( 'page_id' ) ) . "</a>";
-                $items[] = '<a href="' . get_permalink( at_option( 'page_id' ) ) . '#' . sanitize_title( $group ) . '">' . $group . '</a>';
+                $items[] = "<a href='" . esc_url( get_permalink( at_option( 'page_id' ) ) ) . "'>" . esc_html( get_the_title( at_option( 'page_id' ) ) ) . "</a>";
+                if ( $group ) {
+                    $items[] = '<a href="' . esc_url( get_permalink( at_option( 'page_id' ) ) . '#' . sanitize_title( $group ) ) . '">' . esc_html( $group ) . '</a>';
+                }
             }
             $taxonomy = get_queried_object();
             $items[] = $taxonomy->name;
@@ -426,8 +568,10 @@ add_filter( 'dci_get_breadcrumb_items', function( $items ) {
             $group = function_exists('at_getGroupNameByTerm') ? at_getGroupNameByTerm( $terms[0]->term_id ) : '';
 
             if ( at_option( 'page_id' ) ) {
-                $items[] = "<a href='" . get_permalink( at_option( 'page_id' ) ) . "'>" . get_the_title( at_option( 'page_id' ) ) . "</a>";
-                $items[] = '<a href="' . get_permalink( at_option( 'page_id' ) ) . '#' . sanitize_title( $group ) . '">' . $group . '</a>';
+                $items[] = "<a href='" . esc_url( get_permalink( at_option( 'page_id' ) ) ) . "'>" . esc_html( get_the_title( at_option( 'page_id' ) ) ) . "</a>";
+                if ( $group ) {
+                    $items[] = '<a href="' . esc_url( get_permalink( at_option( 'page_id' ) ) . '#' . sanitize_title( $group ) ) . '">' . esc_html( $group ) . '</a>';
+                }
             }
 
             $items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $terms[0] ) ), $terms[0]->name );
@@ -468,4 +612,4 @@ add_action('admin_notices', function() {
     }
 });
 
-require_once(plugin_dir_path(__FILE__) . 'gutenberg.php');
+require_once(AT_PLUGIN_DIR . 'gutenberg.php');

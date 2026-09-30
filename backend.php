@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
     class AmministrazioneTrasparente_Backend {
         function __construct() {
             add_action( 'admin_notices', [ $this, 'adminMessages' ] );

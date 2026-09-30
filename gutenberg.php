@@ -1,10 +1,14 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 class AT_Gutenberg_Blocks {
 
     public function __construct() {
         add_action('init', [$this, 'register_blocks']);
-        add_action('wp_enqueue_scripts', [$this, 'register_frontend_scripts']);
+        add_action('init', [$this, 'register_frontend_scripts']);
         add_shortcode('amministrazione-trasparente', [$this, 'shortcode_amministrazione_trasparente']); // <-- Add this line
     }
 
@@ -13,7 +17,7 @@ class AT_Gutenberg_Blocks {
             'at-frontend',
             plugins_url('includes/js/gutenberg-page-widget.js',  __FILE__ ),
             array('jquery'),
-            filemtime(plugin_dir_path(__FILE__) . 'includes/js/gutenberg-page-widget.js'),
+            AT_VERSION,
             true
         );
     }
@@ -24,14 +28,14 @@ class AT_Gutenberg_Blocks {
             'at-sezioni-block',
             plugins_url('includes/js/block.js', __FILE__),
             [ 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-block-editor' ],
-            filemtime(plugin_dir_path(__FILE__) . 'includes/js/block.js')
+            AT_VERSION
         );
 
         wp_register_style(
             'at-sezioni-block-style',
             plugins_url('includes/css/gutenberg-page-widget.css', __FILE__),
             [],
-            filemtime(plugin_dir_path(__FILE__) . 'includes/css/gutenberg-page-widget.css')
+            AT_VERSION
         );
 
         register_block_type('amministrazione-trasparente/page-widget', [
@@ -110,22 +114,13 @@ class AT_Gutenberg_Blocks {
                             <?php foreach ($tipologieGruppo as $idTipologia):
                                 $term = get_term_by('id', $idTipologia, 'tipologie');
                                 if (!$term) continue;
-                                $has_content = (int) get_posts([
-                                    'post_type' => 'amm-trasparente',
-                                    'tax_query' => [
-                                        [
-                                            'taxonomy' => 'tipologie',
-                                            'field' => 'id',
-                                            'terms' => $term->term_id,
-                                        ]
-                                    ],
-                                    'posts_per_page' => 1,
-                                    'fields' => 'ids',
-                                ]);
-                                $is_empty = !$has_content;
+                                $link = get_term_link($term);
+                                if (is_wp_error($link)) continue;
+                                // $term->count already holds the number of published documents.
+                                $is_empty = ( (int) $term->count === 0 );
                                 ?>
                                 <li>
-                                    <a href="<?php echo esc_url(get_term_link($term)); ?>"
+                                    <a href="<?php echo esc_url($link); ?>"
                                        title="<?php echo esc_attr($term->name); ?>"
                                        <?php if ($showOpacity && $is_empty): ?>
                                            class="at-sezioni-term-opacity"
@@ -149,13 +144,7 @@ class AT_Gutenberg_Blocks {
         
         // Enqueue frontend script only if expandable navigation is enabled
         if ($expandableNavigation) {
-            wp_enqueue_script(
-                'at-frontend',
-                plugins_url('includes/js/gutenberg-page-widget.js',  __FILE__ ),
-                array('jquery'),
-                filemtime(plugin_dir_path(  __FILE__ ) . 'includes/js/gutenberg-page-widget.js'),
-                true
-            );
+            wp_enqueue_script( 'at-frontend' );
 
             
         }

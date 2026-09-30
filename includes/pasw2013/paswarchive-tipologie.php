@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php get_header(); ?>
 
     <?php get_sidebar(); ?> 
@@ -9,7 +10,7 @@
 <!-- fine breadcrumbs -->
 
 	<?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); ?>
-	<h2 class="page-title"><?php echo esc_attr( $term->name ); ?></h2>
+	<h2 class="page-title"><?php echo $term ? esc_html( $term->name ) : ''; ?></h2>
 	
 	<?php
 	if (is_tax( 'tipologie' )) {

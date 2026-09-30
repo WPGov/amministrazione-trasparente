@@ -7,11 +7,8 @@
     echo '<ul>';
 
     foreach ( at_get_taxonomy_groups() as $groupName ) {
-        $tipologieGruppo = at_getGroupConf( sanitize_title( $groupName ) );
-
         $sez_l = sanitize_title( $groupName );
-        echo '<li><a href="#'.$sez_l.'">'.$groupName.'</a></li>';
-
+        echo '<li><a href="#'.esc_attr( $sez_l ).'">'.esc_html( $groupName ).'</a></li>';
     }
     echo '</ul>';
 ?>

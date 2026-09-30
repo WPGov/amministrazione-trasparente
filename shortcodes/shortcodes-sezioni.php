@@ -3,7 +3,13 @@
         exit; // Exit if accessed directly
     }
 
-extract(shortcode_atts(array('col' => '1', 'bar' => '0', 'con' => '0'), $atts));
+$at_atts = shortcode_atts( array( 'col' => '1', 'bar' => '0', 'con' => '0' ), $atts );
+$col = (int) $at_atts['col'];
+$bar = (int) $at_atts['bar'];
+$con = (int) $at_atts['con'];
+
+$atscss = '';
+$atw2   = '';
 
 switch ($col) {
     case 0:
@@ -43,7 +49,7 @@ echo '
   font-size: 0.8em;
   font-weight: bold; }
 </style>
-<!-- Generato con il Plugin Wordpress Amministrazione Trasparente v.' . sanitize_text_field( get_option('at_version_number') ) . '-->';
+<!-- Generato con il Plugin Wordpress Amministrazione Trasparente v.' . AT_VERSION . '-->';
 
 if ($bar) {
     echo '<div style="border: 1px solid #eee; padding: 8px 10px; background: #FBFBFB;">';
@@ -51,7 +57,7 @@ if ($bar) {
         echo do_shortcode( '[at-desc]' );
     }
     if ($bar > 1) {
-        echo '<span style="float:right;"><a href="'.get_post_type_archive_link( 'amm-trasparente' ).'"><small>Ultimi inseriti</small></a></span>';
+        echo '<span style="float:right;"><a href="'.esc_url( get_post_type_archive_link( 'amm-trasparente' ) ).'"><small>Ultimi inseriti</small></a></span>';
     }
     echo do_shortcode( '[at-search]' ).'</div>';
 }
@@ -74,30 +80,20 @@ foreach ( at_get_taxonomy_groups() as $groupName ) {
             continue;
         }
 
-        $query = new WP_Query(
-            array(
-                'posts_per_page' => -1,
-                'post_type' => 'amm-trasparente',
-                'post_status' => 'publish',
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'tipologie',
-                        'field'    => 'term_id',
-                        'terms'    => $idTipologia,
-                    )
-                )
-            )
-        );
-        $found_posts = $query->found_posts;
+        $link = get_term_link( $term );
+        if ( is_wp_error( $link ) ) {
+            continue;
+        }
+
+        // $term->count already holds the number of published documents in the term.
+        $found_posts = (int) $term->count;
         $atcounter = $atcounter + $found_posts;
         if ( !$found_posts && at_option('opacity') ) {
             $opty = 'style="opacity: 0.5;"';
         } else { $opty = ''; }
         $atreturn .= '<li '.$opty.'>';
-        $atreturn .= '<a href="' . get_term_link( $term ) . '" title="' . esc_attr( $term->name ). '">' . esc_html( $term->name ). '</a>';
+        $atreturn .= '<a href="' . esc_url( $link ) . '" title="' . esc_attr( $term->name ). '">' . esc_html( $term->name ). '</a>';
         $atreturn .= '</li>';
-
-        wp_reset_postdata();
 
     }
     $atreturn .= '</ul>';
@@ -106,8 +102,8 @@ foreach ( at_get_taxonomy_groups() as $groupName ) {
 
     $sez_l = sanitize_title( $groupName );
     echo '<h3>';
-    if ($con) { echo '<div class="at-number">'.esc_attr( $atcounter ).'</div>'; }
-    echo '<a id="'.$sez_l.'" href="#'.$sez_l.'">'.esc_attr( $groupName ).'</a></h3>';
+    if ($con) { echo '<div class="at-number">'.esc_html( $atcounter ).'</div>'; }
+    echo '<a id="'.esc_attr( $sez_l ).'" href="#'.esc_attr( $sez_l ).'">'.esc_html( $groupName ).'</a></h3>';
     echo $atreturn;
 
     echo '</div>';

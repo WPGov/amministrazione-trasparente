@@ -1,0 +1,99 @@
+/* Pagina "Revisione" e pannello di checkup — Amministrazione Trasparente.
+   Si appoggia il più possibile alle classi del core di WordPress
+   (.wrap, .wp-list-table, .subsubsub, .row-actions, .notice, .button). */
+
+/* --- Pannello di checkup --- */
+.at-checkup {
+	margin: 16px 0;
+	padding: 4px 12px;
+}
+.at-checkup li {
+	margin: 8px 0;
+}
+.at-checkup .dashicons {
+	vertical-align: text-bottom;
+}
+.at-ok {
+	color: #007017;
+}
+.at-warn {
+	color: #b32d2e;
+}
+.at-muted {
+	color: #646970;
+}
+
+/* --- Tabella delle sezioni --- */
+.at-table th.at-num,
+.at-table td.at-num {
+	width: 8em;
+	text-align: center;
+}
+.at-table td.at-num {
+	font-size: 15px;
+	font-variant-numeric: tabular-nums;
+}
+.at-table td.at-num a {
+	font-weight: 600;
+	text-decoration: none;
+}
+.at-table th.at-num-wide,
+.at-table td.at-num-wide {
+	width: 11em;
+}
+
+/* Intestazione di gruppo: barra chiara con accento, non una riga scura. */
+.at-table tr.at-group td {
+	background: #f0f0f1;
+	border-left: 4px solid #2271b1;
+	font-weight: 600;
+	padding: 10px 12px;
+}
+/* Come le .row-actions del core: la scorciatoia compare al passaggio del mouse. */
+.at-table tr.at-group .at-group-meta {
+	float: right;
+	font-weight: 400;
+	visibility: hidden;
+}
+.at-table tr.at-group:hover .at-group-meta,
+.at-table tr.at-group:focus-within .at-group-meta {
+	visibility: visible;
+}
+
+.at-depth {
+	color: #a7aaad;
+}
+.at-empty-state {
+	padding: 24px 12px;
+	text-align: center;
+}
+
+/* --- Modale dei dettagli --- */
+.at-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100100;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 12vh 16px 16px;
+	background: rgba(0, 0, 0, .5);
+}
+.at-modal-box {
+	position: relative;
+	width: 100%;
+	max-width: 460px;
+	max-height: 70vh;
+	overflow: auto;
+	padding: 24px;
+	background: #fff;
+	border-radius: 4px;
+}
+.at-modal-box h2 {
+	margin-top: 0;
+}
+.at-modal-close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+}

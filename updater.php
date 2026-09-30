@@ -1,5 +1,10 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
+
 function at_install_upgrade() {
 
     $terms = get_terms( array( 'taxonomy' => 'tipologie', 'hide_empty' => false ) );
