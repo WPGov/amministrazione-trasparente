@@ -1,18 +1,17 @@
 ﻿=== Amministrazione Trasparente ===
 Contributors: Milmor
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F2JK36SCXKTE2
-Tags: amministrazione, aperta, trasparente, documenti, atti, spese, comuni, pa, amministrazioni, locali, pubblicazione, online, imprese, enti, scuola, università, comunità, montana, valle, modulo, software, gratuito, disposizioni, obbligo, legge, comune, modulo, decreto, 14 marzo, 2013, sovvenzioni, pubblici, pubblico, marco, milesi
+Tags: amministrazione trasparente, trasparenza, pubblica amministrazione, comuni, scuole
 Requires at least: 5.0
 Requires PHP: 7.0
 Tested up to: 7.1
-Version: 9.2.4
-Stable tag: 9.2.4
+Stable tag: 9.2.5
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Plugin completo per la gestione documentale di Amministrazione Trasparente nelle Pubbliche Amministrazioni (D.lgs. 33/2013)
 
-== Descrizione ==
+== Description ==
 
 **Amministrazione Trasparente** è il plugin WordPress più completo per la gestione dei documenti e delle sezioni richieste dalla normativa italiana sulla trasparenza amministrativa (D.lgs. 33/2013 e successive integrazioni).  
 Permette di pubblicare, organizzare e mantenere aggiornate tutte le informazioni obbligatorie direttamente dal tuo sito WordPress, senza servizi esterni.
@@ -39,7 +38,7 @@ Permette di pubblicare, organizzare e mantenere aggiornate tutte le informazioni
 Per qualsiasi informazione, segnalazione di problemi o feedback, visita [wpgov.it](https://www.wpgov.it/)  
 Documentazione completa: [docs.wpgov.it](https://docs.wpgov.it/docs/category/amministrazione-trasparente)
 
-== Installazione ==
+== Installation ==
 
 1. Scarica e installa il plugin tramite la directory di WordPress o carica manualmente la cartella.
 2. Attiva il plugin tramite il menu 'Plugin' di WordPress.
@@ -48,6 +47,39 @@ Documentazione completa: [docs.wpgov.it](https://docs.wpgov.it/docs/category/amm
 
 Video guida:  
 https://www.youtube.com/watch?v=qWj9hvzNSlg
+
+== Frequently Asked Questions ==
+
+= Come mostro le sezioni nella pagina pubblica? =
+
+Inserisci nella pagina il blocco Gutenberg "Amministrazione Trasparente" oppure lo shortcode `[amministrazione-trasparente]`, che accetta gli stessi parametri del blocco:
+
+* `col`: numero di colonne (predefinito `2`)
+* `group_heading_level`: livello del titolo dei gruppi, da `h1` a `h6` (predefinito `h3`)
+* `show_opacity`: `1` per mostrare in trasparenza le sezioni senza documenti
+* `expandable_navigation`: `1` per rendere i gruppi espandibili (solo con lo stile `minimal`)
+* `style`: `minimal` per lo stile grafico del plugin
+
+Esempio: `[amministrazione-trasparente col="3" show_opacity="1"]`
+
+= Quali altri shortcode sono disponibili? =
+
+* `[at-sezioni]`: elenco delle sezioni, con i parametri `col` (colonne), `bar="1"` (barra di ricerca) e `con="1"` (contatori dei documenti)
+* `[at-search]`: modulo di ricerca tra i documenti
+* `[at-head]`: indice dei gruppi con link alle ancore
+* `[at-desc]`: testo descrittivo introduttivo
+
+= Come aggiungo la navigazione tra le sezioni nelle pagine di archivio? =
+
+Sul tema PASW2013 è automatica. Negli altri temi aggiungi `<?php at_archive_buttons(); ?>` nel template dell'archivio della tassonomia.
+
+= Una sezione non compare nella pagina pubblica, perché? =
+
+Le sezioni vengono mostrate solo se assegnate a un gruppo. Apri Trasparenza > Revisione: il checkup della configurazione segnala le sezioni senza gruppo, le sezioni presenti in più gruppi e i documenti senza sezione.
+
+= Posso riordinare o personalizzare gruppi e sezioni? =
+
+Sì, da Trasparenza > Impostazioni > Gestione sezioni puoi assegnare le sezioni ai gruppi e cambiarne l'ordine.
 
 == Screenshots ==
 1. Menù Laterale
@@ -64,12 +96,18 @@ https://www.youtube.com/watch?v=qWj9hvzNSlg
 
 > Di seguito la lista completa di aggiornamenti, test e correzioni. Aggiornare il prima possibile per usufruire delle ultime migliorie!
 
+= 9.2.5 2026-10-01 =
+* **Migliorato**: readme con sezione FAQ, parametri degli shortcode e tag aggiornati
+* **Corretto**: numero di versione interno non allineato, che impediva l'esecuzione della routine di aggiornamento
+* **Corretto**: bug minori e ottimizzazioni varie
+
 = 9.2.4 2026-09-30 =
 * **Nuovo**: schermata "Revisione" riprogettata: sezioni raggruppate come nella pagina pubblica, viste rapide con contatori (tutte, con bozze, da rivedere, senza documenti), filtro per gruppo e ricerca
 * **Nuovo**: checkup della configurazione unificato tra "Revisione" e "Gestione sezioni", con segnalazione di sezioni senza gruppo, sezioni presenti in più gruppi, documenti senza sezione e riferimenti a sezioni eliminate
 * **Migliorato**: prestazioni dello shortcode [at-sezioni] e del blocco Gutenberg, che non eseguono più una query per ogni sezione
 * **Migliorato**: i permalink delle sezioni vengono rigenerati automaticamente all'attivazione e all'aggiornamento del plugin
 * **Corretto**: errore nell'uso ripetuto degli shortcode [at-sezioni] e [at-search] nella stessa pagina
+* **Corretto**: messaggio di output inatteso durante l'attivazione su nuove installazioni
 * **Modificato**: requisiti minimi WordPress 5.0 e PHP 7.0
 
 = 9.1 2025-06-04 =
@@ -80,13 +118,13 @@ https://www.youtube.com/watch?v=qWj9hvzNSlg
 
 = 9.0 2025-05-28 =
 
-* **Nuovo**: Aggiunga funzionalità di dashboard (Trasparenza > Revisione) per una panoramica delle sezioni e dei contenuti (la dashboard è visibile a chiunque abbia diritti di pubblicazione sul post type)
+* **Nuovo**: Aggiunta funzionalità di dashboard (Trasparenza > Revisione) per una panoramica delle sezioni e dei contenuti (la dashboard è visibile a chiunque abbia diritti di pubblicazione sul post type)
 * **Nuovo**: Dashboard: nuova visualizzazione voci senza tipologia associata
 * **Nuovo**: La dashboard sarà nel tempo arricchita con consigli e funzionalità
 * **Nuovo**: Benvenuto Gutenberg, addio shortcode (facoltativo)! Aggiunto blocco Gutenberg per visualizzare le sezioni e un nuovo stile grafico selezionabile!
 * **Nuovo**: Blocco Gutenberg con diverse opzioni di stile e possibilità di avere voci "espandibili"
 * **Nuovo**: Migliorata pagina delle impostazioni con layout moderno per la personalizzazione delle sezioni e possibilità di riordinare le categorie
-* **Nuovo**: Aggiungo supporto per le breadcrumb del template "Design Comuni WordPress Theme" (modello PNRR) - Modifica applicata automaticamente
+* **Nuovo**: Aggiunto supporto per le breadcrumb del template "Design Comuni WordPress Theme" (modello PNRR) - Modifica applicata automaticamente
 * **Nuovo**: Rimosso prefisso "Sezione:" dal titolo degli archivi delle sezioni
 * **Migliorato**: Accessibilità e prestazioni generali
 * **Corretto**: Bug minori, test e ottimizzazioni varie

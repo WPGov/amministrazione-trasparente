@@ -5,6 +5,9 @@ Plugin WordPress per la gestione della sezione Amministrazione Trasparente ai se
 [![WordPress plugin](https://img.shields.io/wordpress/plugin/v/amministrazione-trasparente.svg)](https://it.wordpress.org/plugins/amministrazione-trasparente/)
 [![Active Installs](https://img.shields.io/wordpress/plugin/installs/amministrazione-trasparente.svg)](https://it.wordpress.org/plugins/amministrazione-trasparente/)
 [![Downloads](https://img.shields.io/wordpress/plugin/dt/amministrazione-trasparente.svg)](https://it.wordpress.org/plugins/amministrazione-trasparente/)
+[![Tested up to](https://img.shields.io/wordpress/plugin/tested/amministrazione-trasparente.svg)](https://it.wordpress.org/plugins/amministrazione-trasparente/)
+[![Rating](https://img.shields.io/wordpress/plugin/rating/amministrazione-trasparente.svg)](https://it.wordpress.org/plugins/amministrazione-trasparente/#reviews)
+[![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 Pubblica, organizza e mantieni aggiornati i documenti obbligatori direttamente dal sito WordPress dell'ente, senza servizi esterni.
 
